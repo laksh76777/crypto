@@ -6,6 +6,8 @@ import { FileRecord } from '../src/models/File';
 import { AuditLog } from '../src/models/AuditLog';
 import { config } from '../src/config/env';
 
+import { resetAndSeedUsers } from '../src/scripts/seedUsers';
+
 describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF End-to-End)', () => {
   let userAToken: string;
   let userAId: string;
@@ -55,6 +57,7 @@ describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF
   });
 
   afterAll(async () => {
+    await resetAndSeedUsers();
     await disconnectDatabase();
   });
 

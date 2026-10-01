@@ -16,7 +16,7 @@ const startServer = async () => {
     // Ensure default 3 primary accounts always exist
     const defaultAccounts = [
       { name: 'Laksh Suthar', email: 'laksh@gmail.com', password: 'Password123!', role: 'USER' as const },
-      { name: 'Paritosh Sharma', email: 'paritosh@gmail.com', password: 'Password123!', role: 'USER' as const },
+      { name: 'Paritosh Nilmani', email: 'paritosh@gmail.com', password: 'Password123!', role: 'USER' as const },
       { name: 'Admin User', email: 'admin@gmail.com', password: 'Password123!', role: 'ADMIN' as const }
     ];
 

@@ -18,6 +18,7 @@ export default {
         }
       },
       fontFamily: {
+        sans: ['Sora', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
       }
     },

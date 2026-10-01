@@ -2,6 +2,10 @@ node_modules/
 dist/
 uploads/*.enc
 !uploads/.gitkeep
+backend/uploads/*.enc
+backend/uploads/*.bak
+!backend/uploads/.gitkeep
 .env
 .DS_Store
 *.log
+

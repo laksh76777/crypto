@@ -24,7 +24,7 @@ export async function resetAndSeedUsers() {
 
   console.log('>>> [SEED] Registering Account 2: paritosh@gmail.com (Receiver)...');
   const user2 = await AuthService.register({
-    name: 'Paritosh Sharma',
+    name: 'Paritosh Nilmani',
     email: 'paritosh@gmail.com',
     password: 'Password123!',
     role: 'USER'

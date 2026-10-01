@@ -6,6 +6,8 @@ import { FileRecord } from '../src/models/File';
 import { AuditLog } from '../src/models/AuditLog';
 import { CryptoService } from '../src/services/crypto/cryptoService';
 
+import { resetAndSeedUsers } from '../src/scripts/seedUsers';
+
 describe('CryptaShare End-to-End API Integration Tests', () => {
   let userAToken: string;
   let userAId: string;
@@ -23,6 +25,7 @@ describe('CryptaShare End-to-End API Integration Tests', () => {
   });
 
   afterAll(async () => {
+    await resetAndSeedUsers();
     await disconnectDatabase();
   });
 

@@ -5,9 +5,7 @@ import { User } from '../types';
 import {
   Send,
   Upload,
-  Clock,
   KeyRound,
-  ShieldCheck,
   CheckCircle2,
   AlertCircle,
   FileText,
@@ -81,7 +79,6 @@ export const SendFile: React.FC = () => {
     setLoading(true);
     setProgressStep(1);
 
-    // Simulate animated cryptographic progress steps for visual feedback
     const stepInterval = setInterval(() => {
       setProgressStep((prev) => {
         if (prev < 6) return prev + 1;
@@ -110,43 +107,45 @@ export const SendFile: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn relative z-10">
       {/* Title */}
       <div>
         <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono mb-1">
           <Send className="w-4 h-4" />
           <span>HYBRID CRYPTOGRAPHIC TRANSFER</span>
         </div>
-        <h1 className="text-2xl font-bold text-white tracking-tight">Encrypt & Send File</h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-['Sora']">
+          Encrypt & Share File
+        </h1>
+        <p className="text-xs text-[#a2a9b8] mt-1">
           Files are encrypted client-side/session-side using AES-256-GCM, the AES key is protected via RSA-OAEP, and the payload hash is signed using RSA-PSS.
         </p>
       </div>
 
       {/* Cryptographic Primitives Breakdown Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-3 rounded-xl bg-[#0f1422] border border-cyan-900/40 text-center">
+        <div className="neural-card p-3.5 text-center">
           <span className="block text-[10px] font-mono text-cyan-400 uppercase">Encryption</span>
-          <span className="block text-xs font-bold text-white mt-0.5">AES-256-GCM</span>
+          <span className="block text-xs font-bold text-white mt-0.5 font-['Sora']">AES-256-GCM</span>
         </div>
-        <div className="p-3 rounded-xl bg-[#0f1422] border border-purple-900/40 text-center">
+        <div className="neural-card p-3.5 text-center">
           <span className="block text-[10px] font-mono text-purple-400 uppercase">Key Protection</span>
-          <span className="block text-xs font-bold text-white mt-0.5">RSA-OAEP (SPKI)</span>
+          <span className="block text-xs font-bold text-white mt-0.5 font-['Sora']">RSA-OAEP (SPKI)</span>
         </div>
-        <div className="p-3 rounded-xl bg-[#0f1422] border border-emerald-900/40 text-center">
+        <div className="neural-card p-3.5 text-center">
           <span className="block text-[10px] font-mono text-emerald-400 uppercase">Integrity</span>
-          <span className="block text-xs font-bold text-white mt-0.5">SHA-256 Digest</span>
+          <span className="block text-xs font-bold text-white mt-0.5 font-['Sora']">SHA-256 Digest</span>
         </div>
-        <div className="p-3 rounded-xl bg-[#0f1422] border border-amber-900/40 text-center">
+        <div className="neural-card p-3.5 text-center">
           <span className="block text-[10px] font-mono text-amber-400 uppercase">Signature</span>
-          <span className="block text-xs font-bold text-white mt-0.5">RSA-PSS (Salt Digest)</span>
+          <span className="block text-xs font-bold text-white mt-0.5 font-['Sora']">RSA-PSS (Salt)</span>
         </div>
       </div>
 
       {/* Main Card */}
-      <div className="bg-[#0f1422] border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+      <div className="neural-card p-6 sm:p-8 shadow-2xl relative overflow-hidden">
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-red-950/50 border border-red-500/40 text-red-200 text-xs flex items-center gap-2.5">
+          <div className="mb-6 p-4 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-xs flex items-center gap-2.5 animate-shake">
             <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
             <span>{error}</span>
           </div>
@@ -157,26 +156,26 @@ export const SendFile: React.FC = () => {
             <div className="inline-flex p-4 rounded-full bg-emerald-950/60 border border-emerald-500/50 text-emerald-400 mb-2">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h2 className="text-xl font-bold text-white">File Encrypted and Sent Securely!</h2>
-            <p className="text-xs text-slate-400 max-w-md mx-auto">
+            <h2 className="text-xl font-bold text-white font-['Sora']">File Encrypted and Sent Securely!</h2>
+            <p className="text-xs text-[#a2a9b8] max-w-md mx-auto">
               Your document has been transformed into AES-256-GCM ciphertext, signed with your RSA private key, and bound to the recipient's public key.
             </p>
 
-            <div className="p-4 bg-slate-900 rounded-xl border border-slate-800 text-left font-mono text-xs space-y-2 max-w-lg mx-auto">
+            <div className="p-4 bg-black/50 rounded-xl border border-white/10 text-left font-mono text-xs space-y-2 max-w-lg mx-auto">
               <div className="flex justify-between">
-                <span className="text-slate-500">File Name:</span>
+                <span className="text-slate-400">File Name:</span>
                 <span className="text-white font-semibold">{successData.originalFileName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Package ID:</span>
+                <span className="text-slate-400">Package ID:</span>
                 <span className="text-cyan-400 truncate max-w-[200px]">{successData.fileId}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">SHA-256 Digest:</span>
+                <span className="text-slate-400">SHA-256 Digest:</span>
                 <span className="text-emerald-400 truncate max-w-[200px]">{successData.sha256Hash}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Expiration:</span>
+                <span className="text-slate-400">Expiration:</span>
                 <span className="text-slate-300">
                   {successData.expiresAt ? new Date(successData.expiresAt).toLocaleString() : 'Never'}
                 </span>
@@ -192,14 +191,14 @@ export const SendFile: React.FC = () => {
                   setPassword('');
                   setProgressStep(0);
                 }}
-                className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white transition-colors"
+                className="pill-glass px-4 py-2 text-xs font-semibold"
               >
                 Send Another File
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/sent')}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-xs shadow-lg shadow-cyan-500/20 hover:opacity-95 transition-all"
+                className="cta-glass px-5 py-2.5 text-xs font-bold"
               >
                 View Sent Packages
               </button>
@@ -209,10 +208,10 @@ export const SendFile: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* File Selection Box */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2 font-['Sora']">
                 1. Select File for Encryption
               </label>
-              <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/60 rounded-2xl p-6 transition-colors text-center relative bg-slate-900/50">
+              <div className="border-2 border-dashed border-white/20 hover:border-cyan-400/70 rounded-2xl p-6 transition-all text-center relative bg-black/40 cursor-pointer">
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -220,25 +219,25 @@ export const SendFile: React.FC = () => {
                   disabled={loading}
                 />
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="p-3 rounded-full bg-slate-800 text-cyan-400">
+                  <div className="p-3 rounded-full bg-white/5 border border-white/10 text-cyan-400">
                     <Upload className="w-6 h-6" />
                   </div>
                   {file ? (
                     <div>
-                      <p className="text-sm font-bold text-white flex items-center justify-center gap-1.5">
+                      <p className="text-sm font-bold text-white flex items-center justify-center gap-1.5 font-['Sora']">
                         <FileText className="w-4 h-4 text-emerald-400" />
                         {file.name}
                       </p>
-                      <p className="text-xs text-slate-400 font-mono mt-0.5">
+                      <p className="text-xs text-[#a2a9b8] font-mono mt-0.5">
                         {(file.size / 1024).toFixed(1)} KB • {file.type || 'Binary Document'}
                       </p>
                     </div>
                   ) : (
                     <div>
                       <p className="text-sm font-semibold text-slate-300">
-                        Drag and drop a file, or <span className="text-cyan-400 underline">browse</span>
+                        Drag and drop a file, or <span className="text-cyan-300 underline underline-offset-2">browse</span>
                       </p>
-                      <p className="text-xs text-slate-500 mt-1 font-mono">
+                      <p className="text-xs text-slate-400 mt-1 font-mono">
                         Any document type supported (PDF, DOCX, TXT, Images, ZIP up to 50MB)
                       </p>
                     </div>
@@ -250,14 +249,14 @@ export const SendFile: React.FC = () => {
             {/* Recipient & Expiration Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5 font-['Sora']">
                   2. Intended Recipient
                 </label>
                 <select
                   value={selectedRecipient}
                   onChange={(e) => setSelectedRecipient(e.target.value)}
                   disabled={loading}
-                  className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500 font-mono"
+                  className="w-full px-4 py-2.5 neural-input text-sm font-mono"
                 >
                   {recipients.length === 0 ? (
                     <option value="">No other registered users found</option>
@@ -269,35 +268,35 @@ export const SendFile: React.FC = () => {
                     ))
                   )}
                 </select>
-                <p className="text-[11px] text-slate-400 mt-1">
+                <p className="text-[11px] text-[#a2a9b8] mt-1">
                   Recipient's RSA public key will be used to encapsulate the AES key.
                 </p>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5 font-['Sora']">
                   3. Expiration Timeframe
                 </label>
                 <select
                   value={expirationHours}
                   onChange={(e) => setExpirationHours(e.target.value)}
                   disabled={loading}
-                  className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500 font-mono"
+                  className="w-full px-4 py-2.5 neural-input text-sm font-mono"
                 >
                   <option value="1">1 Hour</option>
                   <option value="24">24 Hours (1 Day)</option>
                   <option value="168">7 Days</option>
                   <option value="0">Never Expire</option>
                 </select>
-                <p className="text-[11px] text-slate-400 mt-1">
+                <p className="text-[11px] text-[#a2a9b8] mt-1">
                   Enforces automated access revocation after expiration.
                 </p>
               </div>
             </div>
 
-            {/* Sender Password to Unlock RSA Private Key */}
+            {/* Sender Password */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5 flex items-center gap-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5 flex items-center gap-1.5 font-['Sora']">
                 <KeyRound className="w-3.5 h-3.5 text-cyan-400" />
                 4. Your Password (to unlock your RSA private key for signing)
               </label>
@@ -307,17 +306,17 @@ export const SendFile: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your account password"
                 disabled={loading}
-                className="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full px-4 py-2.5 neural-input text-sm font-mono"
                 required
               />
-              <p className="text-[11px] text-slate-400 mt-1">
+              <p className="text-[11px] text-[#a2a9b8] mt-1">
                 Your private key is protected in the database using PBKDF2 + AES-GCM. Your password unlocks it temporarily in memory to generate the RSA-PSS signature.
               </p>
             </div>
 
             {/* Progress Pipeline Visualization */}
             {loading && (
-              <div className="p-4 rounded-xl bg-slate-900/90 border border-cyan-900/50 space-y-3 animate-fadeIn">
+              <div className="p-4 rounded-xl bg-black/60 border border-white/10 space-y-3 animate-fadeIn">
                 <div className="flex items-center justify-between text-xs font-mono text-cyan-400">
                   <span className="flex items-center gap-2">
                     <Cpu className="w-4 h-4 animate-spin text-cyan-400" />
@@ -344,16 +343,16 @@ export const SendFile: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-6 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-500 hover:opacity-95 text-black font-extrabold text-sm rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-cyan-500/20 transition-all disabled:opacity-50"
+              className="cta-glass w-full py-3.5 text-sm font-bold tracking-wider uppercase mt-2"
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
                   Encrypting & Generating Cryptographic Package...
                 </>
               ) : (
                 <>
-                  <Lock className="w-4 h-4 stroke-[2.5]" />
+                  <Lock className="w-4 h-4 mr-1.5" />
                   Encrypt & Send Package
                 </>
               )}

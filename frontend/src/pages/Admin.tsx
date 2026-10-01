@@ -57,23 +57,23 @@ export const Admin: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-amber-400 text-xs font-mono mb-1">
             <UserCheck className="w-4 h-4" />
-            <span>ADMINISTRATIVE CONTROL CENTER</span>
+            <span className="tracking-widest uppercase">ADMINISTRATIVE CONTROL CENTER</span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">System & User Governance</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">System & User Governance</h1>
+          <p className="text-xs text-[var(--sub)] mt-1">
             Manage registered cryptographic identities, toggle user access authorization, and audit system-wide cryptographic metrics.
           </p>
         </div>
 
         <button
           onClick={fetchAdminData}
-          className="self-start sm:self-auto px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 text-xs font-semibold flex items-center gap-2 transition-colors"
+          className="self-start sm:self-auto pill-glass px-4 py-2 text-xs font-semibold flex items-center gap-2 text-white hover:bg-white/10 transition-colors"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-amber-400' : ''}`} />
           Refresh Stats
@@ -82,31 +82,31 @@ export const Admin: React.FC = () => {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-5 shadow-lg">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Total Users</span>
-          <div className="text-2xl font-bold font-mono text-white">{stats ? stats.totalUsers : '--'}</div>
-          <span className="text-[11px] font-mono text-cyan-400 mt-1 block">Registered Keypairs</span>
+        <div className="neural-card rounded-2xl p-5 shadow-lg">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[var(--sub)] block mb-1">Total Users</span>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-white">{stats ? stats.totalUsers : '--'}</div>
+          <span className="text-[11px] font-mono text-cyan-300 mt-1 block">Registered Keypairs</span>
         </div>
-        <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-5 shadow-lg">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Active Accounts</span>
-          <div className="text-2xl font-bold font-mono text-emerald-400">{stats ? stats.activeUsers : '--'}</div>
-          <span className="text-[11px] font-mono text-emerald-400/80 mt-1 block">Authorized to Transfer</span>
+        <div className="neural-card rounded-2xl p-5 shadow-lg">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[var(--sub)] block mb-1">Active Accounts</span>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400">{stats ? stats.activeUsers : '--'}</div>
+          <span className="text-[11px] font-mono text-emerald-300 mt-1 block">Authorized to Transfer</span>
         </div>
-        <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-5 shadow-lg">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Total File Packages</span>
-          <div className="text-2xl font-bold font-mono text-purple-400">{stats ? stats.totalFiles : '--'}</div>
-          <span className="text-[11px] font-mono text-purple-400/80 mt-1 block">Encrypted with AES-256-GCM</span>
+        <div className="neural-card rounded-2xl p-5 shadow-lg">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[var(--sub)] block mb-1">Total File Packages</span>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-indigo-300">{stats ? stats.totalFiles : '--'}</div>
+          <span className="text-[11px] font-mono text-indigo-200/80 mt-1 block">Encrypted with AES-256-GCM</span>
         </div>
-        <div className="bg-[#0f1422] border border-slate-800 rounded-xl p-5 shadow-lg">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Verified Operations</span>
-          <div className="text-2xl font-bold font-mono text-cyan-400">{stats ? stats.verifiedCount : '--'}</div>
-          <span className="text-[11px] font-mono text-cyan-400/80 mt-1 block">SHA-256 & RSA-PSS Verified</span>
+        <div className="neural-card rounded-2xl p-5 shadow-lg">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[var(--sub)] block mb-1">Verified Operations</span>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-amber-300">{stats ? stats.verifiedCount : '--'}</div>
+          <span className="text-[11px] font-mono text-amber-200/80 mt-1 block">SHA-256 & RSA-PSS Verified</span>
         </div>
       </div>
 
       {/* User Management Table */}
-      <div className="bg-[#0f1422] border border-slate-800 rounded-2xl shadow-xl overflow-hidden space-y-4 p-6">
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+      <div className="neural-card rounded-2xl shadow-2xl overflow-hidden space-y-4 p-6">
+        <div className="flex items-center gap-2 border-b border-white/10 pb-4">
           <Users className="w-5 h-5 text-amber-400" />
           <h2 className="text-base font-bold text-white">Registered Users & Key Registry</h2>
         </div>
@@ -114,7 +114,7 @@ export const Admin: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-900/60 text-slate-400 font-mono uppercase text-[10px] tracking-wider">
+              <tr className="border-b border-white/10 bg-black/40 text-[var(--sub)] font-mono uppercase text-[10px] tracking-wider">
                 <th className="py-3 px-4">User</th>
                 <th className="py-3 px-4">Role</th>
                 <th className="py-3 px-4">RSA Public Key</th>
@@ -123,42 +123,42 @@ export const Admin: React.FC = () => {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 font-sans">
+            <tbody className="divide-y divide-white/5 font-sans">
               {users.map((u) => {
                 const uId = u.id || u._id || '';
                 const isActive = u.status === 'ACTIVE';
                 return (
-                  <tr key={uId} className="hover:bg-slate-900/40 transition-colors">
+                  <tr key={uId} className="hover:bg-white/[0.04] transition-colors">
                     <td className="py-3.5 px-4">
                       <div className="font-bold text-white">{u.name}</div>
-                      <div className="text-[11px] font-mono text-cyan-400/80">{u.email}</div>
+                      <div className="text-[11px] font-mono text-cyan-300">{u.email}</div>
                     </td>
 
                     <td className="py-3.5 px-4 font-mono">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                        u.role === 'ADMIN' ? 'bg-purple-950 text-purple-400 border border-purple-800' : 'bg-slate-800 text-slate-300'
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                        u.role === 'ADMIN' ? 'bg-purple-950/80 text-purple-300 border border-purple-500/30' : 'bg-white/10 text-white/80'
                       }`}>
                         {u.role}
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-4 font-mono text-[10px] text-slate-400">
+                    <td className="py-3.5 px-4 font-mono text-[10px] text-[var(--sub)]">
                       <span className="truncate max-w-[140px] block" title={u.publicKey}>
                         {u.publicKey ? u.publicKey.substring(0, 30) + '...' : 'SPKI Registered'}
                       </span>
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-mono ${
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
                         isActive
-                          ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'
-                          : 'bg-red-950/80 text-red-400 border border-red-800'
+                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/30'
+                          : 'bg-rose-950/80 text-rose-300 border border-rose-500/30'
                       }`}>
                         {u.status || 'ACTIVE'}
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-4 text-slate-400 font-mono text-[11px]">
+                    <td className="py-3.5 px-4 text-[var(--sub)] font-mono text-[11px]">
                       {new Date(u.createdAt).toLocaleDateString()}
                     </td>
 
@@ -166,10 +166,10 @@ export const Admin: React.FC = () => {
                       <button
                         onClick={() => toggleUserStatus(u)}
                         disabled={actionLoadingId === uId}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                           isActive
-                            ? 'bg-red-950/60 hover:bg-red-900 text-red-300 border border-red-800/60'
-                            : 'bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 border border-emerald-800/60'
+                            ? 'bg-rose-950/50 hover:bg-rose-900/60 text-rose-200 border border-rose-800/40'
+                            : 'bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-200 border border-emerald-800/40'
                         }`}
                       >
                         {actionLoadingId === uId
