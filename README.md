@@ -1,441 +1,266 @@
-# CryptaShare — Secure File Sharing and Integrity Verification Using Hybrid Cryptography
 
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Security Standard](https://img.shields.io/badge/Cryptography-FIPS%20%26%20RFC--Compliant-blue.svg)]()
+# 🔐 CryptaShare
 
-> **A Complete Production-Grade Computer Science / Cryptography & Network Security Project**  
-> Demonstrating confidential, authentic, integrity-verified, and tamper-evident file sharing using **AES-256-GCM**, **RSA-OAEP**, **SHA-256**, **RSA-PSS**, and **Zero-Plaintext Storage**.
+## Secure File Sharing & Integrity Verification Using Hybrid Cryptography
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-20%2B-339933?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/Cryptography-Hybrid-8A2BE2?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" />
+</p>
 
-AES-256-GCM for file encryption, RSA-OAEP for secure session-key encapsulation, SHA-256 for file integrity verification, and RSA-PSS for digital signatures and sender authenticity.
-
-## 1. Problem Statement & Objectives
-
-Traditional cloud storage and file-sharing mechanisms routinely suffer from architectural vulnerabilities:
-- **Plaintext Storage at Rest:** Service operators hold master decryption keys, leaving data vulnerable to rogue insiders, data breaches, or physical disk seizures.
-- **Asymmetric Encryption Payload Limitations:** Asymmetric algorithms like RSA cannot encrypt files larger than their modulus length ($< 190$ bytes for 2048-bit keys), requiring hybrid architectures.
-- **Lack of Non-Repudiation & Authenticity:** Symmetric keys alone cannot prove who originated a document.
-- **Silent Tampering:** Without authenticated encryption tags and pre-encryption hashes, bit-rot and malicious modifications go completely undetected.
-
-**CryptaShare** solves these challenges by combining:
-1. **AES-256-GCM** for high-performance symmetric payload encryption.
-2. **RSA-OAEP** for recipient public-key encapsulation of ephemeral session keys.
-3. **SHA-256** for bitwise integrity verification.
-4. **RSA-PSS** for digital signatures and non-repudiation.
-5. **PBKDF2 (100,000 iterations) + AES-256-GCM** to ensure private keys are **never stored as plaintext**.
+<p align="center">
+  <b>Encrypt • Verify • Detect • Protect</b>
+</p>
 
 ---
 
-## 2. Core Hybrid Encryption Architecture
+## 📌 Overview
 
-```
-Large File Payload
-       │
-       ▼
-[AES-256-GCM] ───────────────► [Encrypted File Blob on Disk (.enc)]
-       ▲
-       │
-Random 256-bit AES Key
-       │
-       ▼
-[RSA-OAEP Encrypt using Recipient Public Key]
-       │
-       ▼
-[Encrypted AES Session Key in DB Package]
-```
+**CryptaShare** is a full-stack secure file-sharing application developed as a **Cryptography and Network Security** project.
 
-### Retrieval & Decryption Pipeline:
-```
-[Encrypted AES Key] ──► [RSA-OAEP Decrypt using Recipient Private Key] ──► [Recovered AES Key]
-                                                                                   │
-[Encrypted File Blob] ─────────────────────────────────────────────────────────────┘
-       │
-       ▼
-[AES-256-GCM Decrypt & AuthTag Check]
-       │
-       ▼
-[Decrypted File Buffer]
-       │
-       ├─► Compute SHA-256 ──► Compare with Stored Hash: [Integrity Verified]
-       │
-       └─► Verify RSA-PSS Signature against Sender Public Key: [Authenticity Verified]
-```
+The system demonstrates how multiple cryptographic techniques can be combined to provide:
+
+- 🔒 Confidentiality
+- 🛡️ Integrity
+- ✍️ Authenticity
+- 🔑 Secure key management
+- 👤 Authentication
+- 🚦 Authorization
+- ⚔️ Tamper detection
+- 📋 Security auditing
+
+Instead of using a single encryption algorithm, CryptaShare implements a **hybrid cryptographic architecture** using symmetric encryption for files and asymmetric cryptography for secure key protection and digital signatures.
 
 ---
 
-## 3. Cryptographic Workflow Breakdown
+# ✨ Key Features
+
+| Feature | Implementation |
+|---|---|
+| 🔐 File Encryption | AES-256-GCM |
+| 🔑 Key Protection | RSA-OAEP |
+| #️⃣ Integrity Verification | SHA-256 |
+| ✍️ Digital Signature | RSA-PSS |
+| 🛡️ Private-Key Protection | PBKDF2 + AES-GCM |
+| 👤 Authentication | JWT + bcrypt |
+| 🚦 Authorization | Role-Based Access Control |
+| ⚔️ Tamper Simulation | Ciphertext modification |
+| 🚨 Security Alerts | Failed verification detection |
+| ⏳ File Expiration | Configurable expiration |
+| 📋 Audit Logging | Security event tracking |
+| 💾 Secure Storage | Encrypted `.enc` files |
+| 🧪 Automated Testing | Crypto + API tests |
+
+---
+
+# 🎯 Project Objectives
+
+The main objectives of CryptaShare are:
+
+1. Implement practical cryptographic algorithms.
+2. Demonstrate hybrid encryption in a real application.
+3. Protect files from unauthorized access.
+4. Verify file integrity after transfer.
+5. Authenticate the sender using digital signatures.
+6. Demonstrate ciphertext tampering and attack detection.
+7. Implement secure authentication and authorization.
+8. Maintain security-related audit logs.
+9. Analyze the security properties and trade-offs of the system.
+
+---
+
+# 🔄 Complete Cryptographic Workflow
 
 ```mermaid
 flowchart TD
-    subgraph Sender_Side ["1. Sender Encryption & Signing Pipeline"]
-        F[Original File] -->|Compute Hash| H[SHA-256 Digest]
-        H -->|Sign with Sender Private Key| SIG[RSA-PSS Digital Signature]
-        F -->|Encrypt with AES-256-GCM| CT[Ciphertext + 128-bit AuthTag]
-        K[Random 256-bit AES Key] -->|Encrypt with Recipient Public Key| EK[RSA-OAEP Encrypted Key]
-        K -.->|Used in| CT
-    end
 
-    subgraph Server_Storage ["2. Zero-Plaintext Persistent Storage"]
-        CT -->|Stored as| DISK[("Encrypted File on Disk: /uploads/uuid.enc")]
-        EK -->|Stored in| DB[(MongoDB: File Package Metadata)]
-        SIG -->|Stored in| DB
-        H -->|Stored in| DB
-    end
+    A["👤 Sender"] --> B["📄 Select File"]
 
-    subgraph Receiver_Side ["3. Recipient Verification & Decryption Pipeline"]
-        DISK -->|Read Ciphertext| DEC[AES-256-GCM Decryption]
-        DB -->|Retrieve Encrypted AES Key| DKEY[RSA-OAEP Decryption with Receiver Private Key]
-        DKEY -->|Recovers AES Key| DEC
-        DEC -->|Verifies AuthTag| PF[Recovered File]
-        PF -->|Recompute SHA-256| RH[Computed Hash]
-        RH -->|Bitwise Equality Check| VC{RH === H?}
-        VC -- YES --> SVER{Verify RSA-PSS Signature?}
-        SVER -- VALID --> PASS["✅ Integrity & Authenticity Verified! Download Allowed"]
-        VC -- NO --> FAIL["🚨 Security Alert: File Tampered! Download Blocked"]
-        SVER -- INVALID --> FAIL
-    end
-```
+    B --> C["#️⃣ Generate SHA-256 Hash"]
+    C --> D["✍️ Create RSA-PSS Signature"]
 
----
+    B --> E["🎲 Generate Random AES-256 Key"]
 
-## 4. Key Security Implementations
+    E --> F["🔐 AES-256-GCM Encryption"]
+    B --> F
 
-### 4.1 Private Key Protection (Zero Plaintext Private Keys)
-When a user registers:
-1. A fresh 2048-bit (or 3072-bit) RSA Keypair is generated in memory.
-2. The user's master password is passed into **PBKDF2** with 100,000 iterations of SHA-256 and a 16-byte random salt to derive a 256-bit wrapping key.
-3. The RSA private key PEM is encrypted with **AES-256-GCM** using a 12-byte IV and producing a 16-byte authentication tag.
-4. Only the JSON bundle `{ salt, iv, authTag, encryptedData }` is persisted to the database.
+    F --> G["🔒 Encrypted File"]
 
-### 4.2 Tampering Demonstration Feature (College Lab Requirement)
-To demonstrate the effectiveness of cryptographic integrity protection:
-1. Any authenticated user or administrator can click **"Simulate File Tampering"** on any file package.
-2. The server flips random bits inside the stored `.enc` file on disk.
-3. When the recipient attempts to verify or download the file:
-   - **AES-256-GCM** immediately detects that the authentication tag does not match the modified ciphertext blocks.
-   - The SHA-256 hash comparison fails.
-   - The UI displays a prominent **"SECURITY ALERT: File integrity verification failed"** warning.
-   - The backend returns HTTP `422 Unprocessable Entity` and **strictly blocks download**.
+    E --> H["🔑 RSA-OAEP Encryption"]
+    I["👤 Recipient Public Key"] --> H
 
-### 4.3 Time-Based Access Expiration
-Senders can select an expiration timeframe:
-- 1 Hour
-- 24 Hours
-- 7 Days
-- Never
+    H --> J["🔐 Encrypted AES Key"]
 
-After expiration:
-- Backend authorization middleware returns `410 Gone`.
-- UI displays a gray `Expired` badge.
-- Download access is permanently revoked.
+    G --> K[("💾 Encrypted Storage")]
+    J --> L[("🗄️ MongoDB")]
+    C --> L
+    D --> L
 
----
+    K --> M["👤 Recipient"]
+    L --> M
 
-## 5. Technology Stack
+    M --> N["RSA-OAEP Decrypt AES Key"]
+    N --> O["AES-256-GCM Decrypt"]
+    O --> P["🛡️ Authentication Tag Verification"]
+    P --> Q["#️⃣ SHA-256 Verification"]
+    Q --> R["✍️ RSA-PSS Signature Verification"]
 
-- **Backend:** Node.js (v20+), Express.js, TypeScript
-- **Database:** MongoDB via Mongoose (with embedded `mongodb-memory-server` zero-setup fallback)
-- **Cryptography Engine:** Built-in Node.js `crypto` API (OpenSSL FIPS-compliant primitives)
-- **Password Security:** `bcryptjs` (Cost factor 12)
-- **Authentication:** JSON Web Tokens (JWT) & Role-Based Access Control
-- **Security Middleware:** Helmet, CORS, Express-Rate-Limit, Multer (Memory Storage)
-- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Lucide Icons
+    R --> S{"All Security Checks Passed?"}
 
----
-
-## 6. Directory Structure
-
-```
-cryptashare/
-├── backend/
-│   ├── src/
-│   │   ├── config/              # Environment & MongoDB connection (with in-memory fallback)
-│   │   ├── controllers/         # Auth, File, User, Audit controllers
-│   │   ├── middleware/          # JWT authentication, RBAC, Rate limiting
-│   │   ├── models/              # Mongoose schemas: User, File, AuditLog
-│   │   ├── routes/              # Express route routers
-│   │   ├── services/
-│   │   │   ├── crypto/          # Core cryptographic engine (AES, RSA, SHA, PSS)
-│   │   │   ├── files/           # File lifecycle, storage, and tampering demo
-│   │   │   ├── users/           # User management and statistics
-│   │   │   ├── audit/           # Security audit event logging
-│   │   │   └── auth/            # Registration, login, and key generation
-│   │   ├── app.ts               # Express application configuration
-│   │   └── server.ts            # Entrypoint & default account seeding
-│   ├── tests/                   # Jest automated test suites
-│   ├── uploads/                 # Encrypted ciphertext storage (.enc)
-│   ├── .env.example             # Template environment variables
-│   └── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/          # Navbar, StatusBadge, VerificationModal
-│   │   ├── context/             # AuthContext (JWT & session state)
-│   │   ├── pages/               # Login, Register, Dashboard, Send, Received, Sent, Details, Logs, Admin, Profile
-│   │   ├── services/            # Axios API client
-│   │   ├── types/               # TypeScript interfaces
-│   │   ├── App.tsx              # Router & Protected routes
-│   │   └── main.tsx
-│   └── package.json
-│
-└── docs/                        # Complete Academic Documentation
-    ├── 01-project-overview.md
-    ├── 02-system-architecture.md
-    ├── 03-cryptographic-algorithms.md
-    ├── 04-database-design.md
-    ├── 05-api-documentation.md
-    ├── 06-security-analysis.md
-    └── 07-testing.md
-```
-
----
-
-## 7. Installation & Quick Start
-
-### Prerequisites
-- Node.js version 20 or higher
-- npm version 10 or higher
-
-### Step 1: Install Backend Dependencies
-```bash
-cd backend
-npm install
-```
-
-### Step 2: Install Frontend Dependencies
-```bash
-cd ../frontend
-npm install
-```
-
-### Step 3: Run Backend Server
-```bash
-cd ../backend
-npm run dev
-```
-> **Note:** CryptaShare includes an embedded in-memory MongoDB fallback. It connects to local/cloud MongoDB if `MONGODB_URI` is provided, or seamlessly boots an embedded zero-setup database if no extYes — for a **GitHub README**, it should be visual, compact, scannable, and recruiter/examiner friendly. Your existing README is already detailed, so I would **keep Sections 1–10 and append a polished GitHub-style enhancement**, not add another huge academic explanation. 
-
-Below is the **complete README content**, with your current content preserved and improved with GitHub-friendly badges, visuals, compact diagrams, feature cards, security flow, screenshots/GIF placeholders, and concise sections.
-
-````markdown
-# 🔐 CryptaShare
-
-### Secure File Sharing & Integrity Verification Using Hybrid Cryptography
-
-<p align="center">
-
-  <img src="https://img.shields.io/badge/Node.js-20%2B-brightgreen?style=for-the-badge&logo=node.js" />
-  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react" />
-  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript" />
-  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb" />
-  <img src="https://img.shields.io/badge/Cryptography-Hybrid-blue?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" />
-
-</p>
-
-<p align="center">
-
-  <b>Encrypt • Verify • Detect • Protect</b>
-
-</p>
-
----
-
-## 🚀 Overview
-
-> **A full-stack Computer Science / Cryptography & Network Security project demonstrating confidential, authentic, integrity-verified and tamper-evident file sharing.**
-
-CryptaShare combines:
-
-- 🔐 **AES-256-GCM** — File encryption
-- 🔑 **RSA-OAEP** — Secure AES key encapsulation
-- #️⃣ **SHA-256** — File integrity verification
-- ✍️ **RSA-PSS** — Digital signatures & sender authenticity
-- 🛡️ **PBKDF2 + AES-GCM** — Private-key protection
-- 👤 **JWT + RBAC** — Authentication & authorization
-- ⚔️ **Tamper Simulation** — Attack & defense demonstration
-- 📋 **Audit Logging** — Security event tracking
-
----
-
-## ✨ Key Features
-
-| Feature | Description |
-|---|---|
-| 🔐 Hybrid Encryption | AES-256-GCM + RSA-OAEP |
-| 🛡️ Integrity Verification | SHA-256 + GCM Authentication Tag |
-| ✍️ Digital Signature | RSA-PSS |
-| 🔑 Private-Key Protection | PBKDF2 + AES-256-GCM |
-| 👤 Authentication | JWT + bcrypt |
-| 🚦 Authorization | Role-Based Access Control |
-| ⚔️ Tamper Simulation | Deliberate ciphertext modification |
-| 🚨 Security Alerts | Failed verification blocks download |
-| ⏳ File Expiration | 1 Hour / 24 Hours / 7 Days / Never |
-| 📋 Audit Logs | Security activity tracking |
-| 🗄️ Secure Storage | Encrypted `.enc` files |
-| 🧪 Automated Tests | Cryptographic + API tests |
-
----
-
-# 🔄 How CryptaShare Works
-
-```mermaid
-flowchart LR
-
-    A["📄 Original File"]
-
-    A --> B["#️⃣ SHA-256"]
-    B --> C["✍️ RSA-PSS Signature"]
-
-    A --> D["🔐 AES-256-GCM"]
-    K["🎲 Random 256-bit AES Key"] --> D
-
-    D --> E["🔒 Encrypted File"]
-
-    K --> F["🔑 RSA-OAEP"]
-    G["👤 Recipient Public Key"] --> F
-
-    F --> H["🔐 Encrypted AES Key"]
-
-    E --> I[("💾 Encrypted Storage")]
-    H --> J[("🗄️ MongoDB")]
-
-    I --> R["👤 Receiver"]
-    J --> R
-
-    R --> S["RSA-OAEP Decrypt"]
-    S --> T["AES-256-GCM Decrypt"]
-    T --> U["SHA-256 Verify"]
-    U --> V["RSA-PSS Verify"]
-
-    V --> W{"All Checks Pass?"}
-
-    W -->|YES| X["✅ Download Allowed"]
-    W -->|NO| Y["🚨 Download Blocked"]
+    S -->|YES| T["✅ Secure Download"]
+    S -->|NO| U["🚨 Security Alert"]
+    U --> V["❌ Download Blocked"]
 ````
 
 ---
 
 # 🔐 Hybrid Cryptography
 
-### Why AES + RSA?
+CryptaShare uses a **hybrid cryptographic model**.
 
-RSA is not designed to efficiently encrypt large files.
-
-Therefore CryptaShare uses:
+The large file is encrypted using **AES-256-GCM**, while the AES session key is protected using **RSA-OAEP**.
 
 ```text
-                LARGE FILE
-                    │
-                    ▼
-             AES-256-GCM
-                    │
-                    ▼
-            ENCRYPTED FILE
-                     
-       RANDOM AES SESSION KEY
-                    │
-                    ▼
-               RSA-OAEP
-                    │
-                    ▼
-          ENCRYPTED AES KEY
+                    📄 ORIGINAL FILE
+                           │
+                           ▼
+                   AES-256-GCM
+                           │
+                           ▼
+                  🔒 ENCRYPTED FILE
+                           
+                           
+             🎲 RANDOM AES-256 KEY
+                           │
+                           ▼
+                       RSA-OAEP
+                           │
+                           ▼
+                  🔐 ENCRYPTED AES KEY
 ```
 
-### Algorithm Roles
+### Why Hybrid Encryption?
 
-| Algorithm       | Purpose                           |
-| --------------- | --------------------------------- |
-| **AES-256-GCM** | Encrypt actual file               |
-| **RSA-OAEP**    | Encrypt AES session key           |
-| **SHA-256**     | Verify file integrity             |
-| **RSA-PSS**     | Verify sender authenticity        |
-| **PBKDF2**      | Derive private-key protection key |
-| **bcrypt**      | Protect user passwords            |
+RSA is not designed for efficiently encrypting large files.
+
+Therefore:
+
+```text
+❌ File → RSA
+
+Instead:
+
+✅ File → AES-256-GCM
+✅ AES Key → RSA-OAEP
+```
+
+This combines the performance of symmetric encryption with the secure key-distribution properties of asymmetric cryptography.
 
 ---
 
-# 🛡️ Security Architecture
+# 🧩 Cryptographic Algorithms
 
-```mermaid
-flowchart TB
+| Algorithm       | Type              | Purpose                |
+| --------------- | ----------------- | ---------------------- |
+| **AES-256-GCM** | Symmetric / AEAD  | File encryption        |
+| **RSA-OAEP**    | Asymmetric        | AES key protection     |
+| **SHA-256**     | Hash              | File integrity         |
+| **RSA-PSS**     | Digital Signature | Sender authenticity    |
+| **PBKDF2**      | KDF               | Private-key protection |
+| **bcrypt**      | Password Hashing  | User password security |
 
-    USER["👤 User"]
+---
 
-    USER --> AUTH["🔑 Authentication"]
-    AUTH --> JWT["JWT"]
-    JWT --> RBAC["Role-Based Access Control"]
+# 🔎 Security Verification Pipeline
 
-    RBAC --> FILE["📁 File Processing"]
+CryptaShare does not consider a file safe merely because it can be decrypted.
 
-    FILE --> AES["AES-256-GCM"]
-    FILE --> HASH["SHA-256"]
-    FILE --> SIGN["RSA-PSS"]
+Multiple checks are performed before allowing download.
 
-    AES --> KEY["256-bit AES Key"]
-    KEY --> RSA["RSA-OAEP"]
-
-    RSA --> DB[("MongoDB")]
-    AES --> STORAGE[("Encrypted .enc Storage")]
-    HASH --> DB
-    SIGN --> DB
-
-    STORAGE --> VERIFY["🛡️ Verification"]
-    DB --> VERIFY
-
-    VERIFY --> RESULT{"Verification"}
-
-    RESULT -->|PASS| DOWNLOAD["✅ Download"]
-    RESULT -->|FAIL| BLOCK["🚨 Block Download"]
+```text
+             🔐 Encrypted AES Key
+                     │
+                     ▼
+              RSA-OAEP Decrypt
+                     │
+                     ▼
+                AES-256 Key
+                     │
+                     ▼
+              AES-GCM Decrypt
+                     │
+                     ▼
+             Authentication Tag
+                     │
+                     ▼
+                SHA-256
+                     │
+                     ▼
+             Hash Comparison
+                     │
+                     ▼
+                RSA-PSS
+                     │
+                     ▼
+          Signature Verification
+                     │
+             ┌───────┴───────┐
+             ▼               ▼
+          ✅ PASS          ❌ FAIL
+             │               │
+             ▼               ▼
+      Secure Download     🚨 Block
 ```
 
 ---
 
 # ⚔️ Tamper Detection
 
-CryptaShare includes an **attack simulation** specifically for demonstrating cryptographic integrity protection.
+CryptaShare includes a deliberate **tampering simulation** to demonstrate an attack and its corresponding defense.
 
-### Normal Flow
+## Normal Operation
 
 ```text
-Original File
-     ↓
-AES-256-GCM
-     ↓
-Encrypted File
-     ↓
-Verification
-     ↓
-✅ Download
+📄 Original File
+      ↓
+🔐 AES-256-GCM
+      ↓
+🔒 Encrypted File
+      ↓
+🛡️ Verification
+      ↓
+✅ Download Allowed
 ```
 
-### Attack Flow
+## Tampering Attack
 
 ```text
-Encrypted File
-     ↓
-🔨 Bit Modification
-     ↓
-Modified Ciphertext
-     ↓
-AES-GCM Verification
-     ↓
-❌ Authentication Failed
-     ↓
-🚨 SECURITY ALERT
-     ↓
+🔒 Encrypted File
+      ↓
+🔨 Ciphertext Modification
+      ↓
+💾 Modified Encrypted File
+      ↓
+🛡️ AES-GCM Verification
+      ↓
+❌ Authentication Tag Failure
+      ↓
+🚨 Security Alert
+      ↓
 🚫 Download Blocked
 ```
 
-### Attack Demonstration
+### Attack Visualization
 
 ```mermaid
 flowchart LR
 
     A["🔐 Valid Ciphertext"]
-    B["🔨 Tampering Attack"]
+    B["🔨 Tampering"]
     C["💾 Modified Ciphertext"]
     D["AES-256-GCM"]
     E{"AuthTag Valid?"}
@@ -443,75 +268,65 @@ flowchart LR
     G["❌ Download Blocked"]
     H["✅ Continue Verification"]
 
-    A --> B --> C --> D --> E
-    E -->|NO| F --> G
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+
+    E -->|NO| F
+    F --> G
+
     E -->|YES| H
 ```
 
 ---
 
-# 🔎 Multi-Layer Verification
+# 🛡️ Defense-in-Depth
 
-A file is considered safe only after multiple security checks.
+CryptaShare does not depend on a single security mechanism.
 
 ```text
-        🔐 RSA-OAEP
-             │
-             ▼
-      AES Key Recovery
-             │
-             ▼
-      🔒 AES-256-GCM
-             │
-             ▼
-       AuthTag Check
-             │
-             ▼
-         SHA-256
-             │
-             ▼
-      Hash Comparison
-             │
-             ▼
-         RSA-PSS
-             │
-             ▼
-     Signature Verification
-             │
-       ┌─────┴─────┐
-       ▼           ▼
-   ✅ ALL PASS   ❌ FAILURE
-       │           │
-       ▼           ▼
-    DOWNLOAD      BLOCK
+                    🔐 CryptaShare
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+        ▼                ▼                ▼
+   Identity          Cryptography      Application
+   Security            Security          Security
+        │                │                │
+        ├─ JWT           ├─ AES-GCM       ├─ Helmet
+        ├─ bcrypt        ├─ RSA-OAEP      ├─ CORS
+        ├─ RBAC          ├─ RSA-PSS       ├─ Rate Limit
+        └─ Auth          ├─ SHA-256       ├─ File Limits
+                         └─ PBKDF2        └─ Validation
 ```
 
 ---
 
-# 🔑 Private Key Protection
+# 🔑 Private-Key Protection
 
-Private RSA keys are **never stored as plaintext**.
+RSA private keys are protected before storage.
 
 ```text
-User Password
-      │
-      ▼
+👤 User Password
+       │
+       ▼
 PBKDF2 + SHA-256
-      │
-      ▼
-256-bit Protection Key
-      │
-      ▼
+       │
+       ▼
+🔑 Derived Encryption Key
+       │
+       ▼
 AES-256-GCM
-      │
-      ▼
-Encrypted RSA Private Key
-      │
-      ▼
-MongoDB
+       │
+       ▼
+🔐 Encrypted RSA Private Key
+       │
+       ▼
+🗄️ Database
 ```
 
-Stored key material contains:
+The protected key package contains values such as:
 
 ```text
 Salt
@@ -524,7 +339,7 @@ Encrypted Private Key
 
 # ⏳ File Expiration
 
-Senders can configure:
+Files can be configured with an expiration period.
 
 ```text
 ⏱️ 1 Hour
@@ -540,85 +355,204 @@ Expired File
      ↓
 Authorization Check
      ↓
-HTTP 410 Gone
+🚫 Access Denied
      ↓
-🚫 Download Revoked
+HTTP 410 Gone
+```
+
+---
+
+# 👤 Authentication & Authorization
+
+CryptaShare uses multiple layers of account security.
+
+```text
+User
+ │
+ ▼
+Login
+ │
+ ▼
+bcrypt Password Verification
+ │
+ ▼
+JWT Token
+ │
+ ▼
+Role Verification
+ │
+ ├──────────────┬──────────────┐
+ ▼              ▼              ▼
+👤 Customer    👨‍💼 Admin      🔐 Protected API
+```
+
+### Security mechanisms
+
+* JWT authentication
+* bcrypt password hashing
+* Role-Based Access Control
+* Protected API routes
+* Authorization middleware
+* Request validation
+* Rate limiting
+
+---
+
+# 📋 Audit Logging
+
+Security-relevant events are recorded for traceability.
+
+Examples include:
+
+```text
+LOGIN
+LOGOUT
+FILE_UPLOAD
+FILE_DOWNLOAD
+FILE_SHARE
+FILE_VERIFICATION
+TAMPER_DETECTED
+ACCESS_DENIED
+FILE_EXPIRED
+```
+
+Example:
+
+```json
+{
+  "event": "TAMPER_DETECTED",
+  "user": "recipient",
+  "file": "document.pdf",
+  "timestamp": "2026-10-01T12:00:00Z",
+  "result": "BLOCKED"
+}
 ```
 
 ---
 
 # 🧪 Security Testing
 
-CryptaShare includes automated cryptographic and API testing.
+Run the automated tests with:
 
 ```bash
 cd backend
 npm test
 ```
 
-### Test Coverage
+### Test Categories
 
 ```text
-✅ AES encryption/decryption
-✅ RSA-OAEP key encryption/decryption
-✅ SHA-256 hashing
-✅ RSA-PSS signatures
-✅ Invalid signature detection
-✅ Wrong-key rejection
-✅ Ciphertext tampering
-✅ Authentication-tag tampering
-✅ Unauthorized access
-✅ File expiration
-✅ End-to-end file sharing
+✅ AES Encryption / Decryption
+✅ RSA-OAEP Key Encryption / Decryption
+✅ SHA-256 Hashing
+✅ RSA-PSS Signature Generation
+✅ RSA-PSS Signature Verification
+❌ Invalid Signature Detection
+❌ Wrong Key Detection
+❌ Modified Ciphertext Detection
+❌ Modified AuthTag Detection
+❌ Unauthorized Access
+❌ Expired File Access
+✅ End-to-End File Sharing
 ```
 
 ---
 
-# 🏗️ Technology Stack
+# 📊 Security Properties
 
-### Frontend
+| Security Property         | Mechanism              |
+| ------------------------- | ---------------------- |
+| 🔒 Confidentiality        | AES-256-GCM            |
+| 🛡️ Integrity             | AES-GCM + SHA-256      |
+| ✍️ Authenticity           | RSA-PSS                |
+| 🔑 Key Protection         | RSA-OAEP               |
+| 🔐 Private-Key Protection | PBKDF2 + AES-GCM       |
+| 👤 Authentication         | JWT + bcrypt           |
+| 🚦 Authorization          | RBAC                   |
+| ⚔️ Tamper Detection       | GCM Authentication Tag |
+| 📋 Accountability         | Audit Logging          |
 
-```text
-React 18
-TypeScript
-Vite
-Tailwind CSS
-Lucide Icons
-Axios
+---
+
+# 🏗️ System Architecture
+
+```mermaid
+flowchart TB
+
+    USER["👤 User"]
+
+    FRONTEND["🖥️ React + TypeScript Frontend"]
+
+    API["🌐 Express REST API"]
+
+    AUTH["🔑 Authentication & RBAC"]
+
+    CRYPTO["🔐 Cryptographic Services"]
+
+    FILE["📁 File Services"]
+
+    AUDIT["📋 Audit Services"]
+
+    DB[("🗄️ MongoDB")]
+
+    STORAGE[("💾 Encrypted File Storage")]
+
+    USER --> FRONTEND
+    FRONTEND --> API
+
+    API --> AUTH
+    API --> CRYPTO
+    API --> FILE
+    API --> AUDIT
+
+    AUTH --> DB
+    CRYPTO --> DB
+    FILE --> DB
+    FILE --> STORAGE
+    AUDIT --> DB
 ```
 
-### Backend
+---
+
+# 🧱 Application Modules
 
 ```text
-Node.js 20+
-Express.js
-TypeScript
-Mongoose
-JWT
-bcrypt
-Multer
-Helmet
-Express Rate Limit
-```
-
-### Security
-
-```text
-AES-256-GCM
-RSA-OAEP
-RSA-PSS
-SHA-256
-PBKDF2
-bcrypt
-JWT
-RBAC
-```
-
-### Database
-
-```text
-MongoDB
-MongoDB Memory Server
+CryptaShare
+│
+├── 🔑 Authentication
+│   ├── Registration
+│   ├── Login
+│   ├── JWT
+│   └── Password Security
+│
+├── 📁 File Sharing
+│   ├── Upload
+│   ├── Encryption
+│   ├── Sharing
+│   ├── Download
+│   └── Expiration
+│
+├── 🔐 Cryptographic Engine
+│   ├── AES-256-GCM
+│   ├── RSA-OAEP
+│   ├── RSA-PSS
+│   ├── SHA-256
+│   └── PBKDF2
+│
+├── 🛡️ Verification
+│   ├── AuthTag Verification
+│   ├── Hash Verification
+│   ├── Signature Verification
+│   └── Tamper Detection
+│
+├── 📋 Audit
+│   ├── Security Events
+│   └── Activity Logs
+│
+└── 👑 Administration
+    ├── User Management
+    ├── Security Monitoring
+    └── Audit Review
 ```
 
 ---
@@ -639,8 +573,8 @@ cryptashare/
 │   │   │   ├── crypto/
 │   │   │   ├── files/
 │   │   │   ├── users/
-│   │   │   ├── audit/
-│   │   │   └── auth/
+│   │   │   ├── auth/
+│   │   │   └── audit/
 │   │   ├── app.ts
 │   │   └── server.ts
 │   │
@@ -657,6 +591,7 @@ cryptashare/
 │   │   ├── types/
 │   │   ├── App.tsx
 │   │   └── main.tsx
+│   │
 │   └── package.json
 │
 ├── docs/
@@ -673,14 +608,56 @@ cryptashare/
 
 ---
 
+# 🛠️ Technology Stack
+
+## Frontend
+
+* React 18
+* TypeScript
+* Vite
+* Tailwind CSS
+* Axios
+* Lucide Icons
+
+## Backend
+
+* Node.js 20+
+* Express.js
+* TypeScript
+* Mongoose
+* JWT
+* bcrypt
+* Multer
+* Helmet
+* Express Rate Limit
+
+## Database
+
+* MongoDB
+* MongoDB Memory Server
+
+## Cryptography
+
+* AES-256-GCM
+* RSA-OAEP
+* RSA-PSS
+* SHA-256
+* PBKDF2
+* bcrypt
+
+---
+
 # ⚙️ Installation
 
-### Requirements
+## Requirements
 
 * Node.js `20+`
 * npm `10+`
+* MongoDB / MongoDB Atlas
 
-### Backend
+---
+
+## Backend
 
 ```bash
 cd backend
@@ -694,7 +671,9 @@ Backend:
 http://localhost:5000
 ```
 
-### Frontend
+---
+
+## Frontend
 
 ```bash
 cd frontend
@@ -708,274 +687,350 @@ Frontend:
 http://localhost:5173
 ```
 
-> CryptaShare supports an embedded MongoDB fallback when `MONGODB_URI` is not configured.
+---
+
+# 🔧 Environment Variables
+
+Create a `.env` file inside the backend directory.
+
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+> Never commit real secrets, private keys, database credentials, or production environment variables to GitHub.
 
 ---
 
-# 👤 Demo Accounts
+# 🎬 Recommended Demo Flow
 
-| Role        | Email                  | Password            |
-| ----------- | ---------------------- | ------------------- |
-| 👤 Sender   | `alice@cryptashare.io` | `Password123!`      |
-| 👤 Receiver | `bob@cryptashare.io`   | `Password123!`      |
-| 👑 Admin    | `admin@cryptashare.io` | `AdminPassword123!` |
-
-> ⚠️ Demo credentials are intended only for local evaluation.
-
----
-
-# 🎬 Demo Flow
-
-### 1️⃣ Alice uploads a file
+The complete demonstration can be performed using the following sequence:
 
 ```text
-Alice
- ↓
-Select File
- ↓
-Select Bob
- ↓
-Encrypt & Send
+1️⃣ Register / Login
+        ↓
+2️⃣ Generate / Load RSA Keys
+        ↓
+3️⃣ Select File
+        ↓
+4️⃣ Select Recipient
+        ↓
+5️⃣ Set Expiration
+        ↓
+6️⃣ Encrypt & Send
+        ↓
+7️⃣ Recipient Opens File
+        ↓
+8️⃣ RSA-OAEP Key Recovery
+        ↓
+9️⃣ AES-GCM Decryption
+        ↓
+🔟 Integrity Verification
+        ↓
+1️⃣1️⃣ RSA-PSS Signature Verification
+        ↓
+1️⃣2️⃣ Secure Download
 ```
 
-### 2️⃣ CryptaShare encrypts
+### Tampering Demonstration
 
 ```text
-File
- ↓
-SHA-256
- ↓
-RSA-PSS
- ↓
-AES-256-GCM
- ↓
-RSA-OAEP
-```
-
-### 3️⃣ Server stores
-
-```text
-uploads/
-└── encrypted-file.enc
-
-MongoDB
-├── encrypted AES key
-├── hash
-├── signature
-├── IV
-└── AuthTag
-```
-
-### 4️⃣ Bob verifies
-
-```text
-Bob
- ↓
-RSA-OAEP
- ↓
-AES-GCM
- ↓
-SHA-256
- ↓
-RSA-PSS
- ↓
-✅ Verified
-```
-
-### 5️⃣ Tampering test
-
-```text
+Upload
+  ↓
+Encrypt
+  ↓
+Send
+  ↓
+Verify → ✅
+  ↓
 Simulate Tampering
-        ↓
-Ciphertext Modified
-        ↓
-AES-GCM ❌
-        ↓
-🚨 SECURITY ALERT
-        ↓
-Download Blocked
+  ↓
+Verify Again
+  ↓
+🚨 Tampering Detected
+  ↓
+❌ Download Blocked
 ```
 
 ---
 
-# 📸 Screenshots / Demo
+# 📸 Screenshots & Demo
 
-> Add your actual screenshots/GIFs inside `docs/assets/`.
-
-Recommended structure:
+Create the following directory:
 
 ```text
 docs/
 └── assets/
     ├── dashboard.png
+    ├── login.png
     ├── send-file.png
+    ├── received-files.png
     ├── verification.png
     ├── tamper-detection.png
     └── cryptashare-demo.gif
 ```
 
-### Application
+## 🔑 Login
+
+<p align="center">
+  <img src="docs/assets/login.png" width="850" alt="CryptaShare Login">
+</p>
+
+## 🖥️ Dashboard
 
 <p align="center">
   <img src="docs/assets/dashboard.png" width="850" alt="CryptaShare Dashboard">
 </p>
 
-### Secure File Sharing
+## 📤 Secure File Sharing
 
 <p align="center">
   <img src="docs/assets/send-file.png" width="850" alt="Secure File Sharing">
 </p>
 
-### Verification
+## 🛡️ Verification
 
 <p align="center">
   <img src="docs/assets/verification.png" width="850" alt="Cryptographic Verification">
 </p>
 
-### Tamper Detection
+## ⚔️ Tamper Detection
 
 <p align="center">
   <img src="docs/assets/tamper-detection.png" width="850" alt="Tamper Detection">
 </p>
 
----
+## 🎬 Application Demo
 
-# 📊 Security Properties
-
-| Security Property       | Implementation     |
-| ----------------------- | ------------------ |
-| 🔒 Confidentiality      | AES-256-GCM        |
-| 🛡️ Integrity           | AES-GCM + SHA-256  |
-| ✍️ Authenticity         | RSA-PSS            |
-| 🔑 Key Security         | RSA-OAEP           |
-| 🔐 Private-Key Security | PBKDF2 + AES-GCM   |
-| 👤 Authentication       | JWT + bcrypt       |
-| 🚦 Authorization        | RBAC               |
-| ⚔️ Tamper Detection     | GCM AuthTag + Hash |
-| 📋 Accountability       | Audit Logs         |
-
----
-
-# ⚖️ Security Trade-offs
-
-| Decision    | Advantage                     | Trade-off                          |
-| ----------- | ----------------------------- | ---------------------------------- |
-| AES-256-GCM | Fast + authenticated          | IV management required             |
-| RSA-OAEP    | Secure key encapsulation      | Slower than symmetric crypto       |
-| RSA-PSS     | Strong signatures             | Computational overhead             |
-| SHA-256     | Simple integrity verification | Does not authenticate sender alone |
-| PBKDF2      | Slows password guessing       | Key derivation cost                |
-| Audit Logs  | Better traceability           | Additional storage                 |
-
----
-
-# 🧠 Why This Project?
-
-CryptaShare bridges **cryptographic theory and practical cybersecurity** by combining:
-
-```text
-Cryptographic Algorithms
-          +
-Secure Software Architecture
-          +
-Authentication & Authorization
-          +
-Attack Simulation
-          +
-Security Testing
-          +
-Audit Logging
-          ↓
-   Practical CNS Project
-```
-
-It demonstrates:
-
-* Symmetric cryptography
-* Asymmetric cryptography
-* Hybrid encryption
-* Hashing
-* Digital signatures
-* Key management
-* Authentication
-* Authorization
-* Integrity verification
-* Attack simulation
-* Threat analysis
-* Secure application development
-
----
-
-# 🛣️ Future Enhancements
-
-* [ ] ECC / modern elliptic-curve cryptography
-* [ ] Ed25519 signatures
-* [ ] X25519 key exchange
-* [ ] Client-side encryption
-* [ ] Key rotation & revocation
-* [ ] Hardware-backed key storage
-* [ ] WebAuthn / Passkeys
-* [ ] HTTPS production deployment
-* [ ] Docker deployment
-* [ ] Performance benchmarking
-* [ ] Cloud object storage
-* [ ] Advanced security dashboard
+<p align="center">
+  <img src="docs/assets/cryptashare-demo.gif" width="900" alt="CryptaShare Demo">
+</p>
 
 ---
 
 # 📚 Documentation
 
-Detailed documentation:
+Detailed technical documentation is available in the `docs/` directory.
 
-| Document                         | Description              |
-| -------------------------------- | ------------------------ |
-| `01-project-overview.md`         | Project overview         |
-| `02-system-architecture.md`      | Architecture             |
-| `03-cryptographic-algorithms.md` | Cryptographic algorithms |
-| `04-database-design.md`          | Database design          |
-| `05-api-documentation.md`        | API reference            |
-| `06-security-analysis.md`        | Security analysis        |
-| `07-testing.md`                  | Testing                  |
+| Document                         | Description                      |
+| -------------------------------- | -------------------------------- |
+| `01-project-overview.md`         | Project overview and objectives  |
+| `02-system-architecture.md`      | System architecture and workflow |
+| `03-cryptographic-algorithms.md` | Cryptographic algorithms         |
+| `04-database-design.md`          | Database structure               |
+| `05-api-documentation.md`        | REST API documentation           |
+| `06-security-analysis.md`        | Security analysis                |
+| `07-testing.md`                  | Testing and validation           |
 
 ---
 
-# 🎓 Academic Relevance
+# 🎓 Cryptography & Network Security Relevance
 
-### Cryptography & Network Security Mini Project
-
-CryptaShare directly demonstrates:
+CryptaShare directly demonstrates practical implementation of:
 
 ```text
-✔ Algorithm Implementation
-✔ Secure Application Development
-✔ Attack Simulation
-✔ Defense Mechanisms
-✔ Security Analysis
-✔ Automated Testing
-✔ Practical Cryptography
+🔐 Symmetric Cryptography
+🔑 Asymmetric Cryptography
+🔒 Hybrid Encryption
+#️⃣ Cryptographic Hashing
+✍️ Digital Signatures
+🛡️ Integrity Verification
+👤 Authentication
+🚦 Authorization
+🔑 Key Management
+⚔️ Attack Simulation
+🚨 Tamper Detection
+📋 Security Auditing
 ```
 
-### Core Algorithms
+### Project Mapping
+
+| Academic Requirement     | CryptaShare Implementation             |
+| ------------------------ | -------------------------------------- |
+| Algorithm Implementation | AES, RSA, SHA-256, PBKDF2              |
+| Secure Application       | Full-stack secure file sharing         |
+| Attack Simulation        | Ciphertext tampering                   |
+| Defense Mechanism        | GCM AuthTag + SHA-256 + RSA-PSS        |
+| Security Analysis        | Threats, controls and trade-offs       |
+| Working Prototype        | React + Node.js application            |
+| Testing                  | Automated cryptographic tests          |
+| Documentation            | Architecture + algorithm documentation |
+
+---
+
+# ⚖️ Security Trade-offs
+
+| Design          | Advantage                              | Trade-off                               |
+| --------------- | -------------------------------------- | --------------------------------------- |
+| AES-256-GCM     | Fast authenticated encryption          | Requires correct IV management          |
+| RSA-OAEP        | Secure asymmetric key protection       | Computationally expensive               |
+| RSA-PSS         | Strong digital signatures              | Higher computation than hashing         |
+| SHA-256         | Fast integrity digest                  | Hash alone does not authenticate sender |
+| PBKDF2          | Makes password guessing more expensive | Adds derivation overhead                |
+| Audit Logs      | Better traceability                    | Additional storage                      |
+| File Expiration | Limits long-term access                | Requires expiration checks              |
+
+---
+
+# 🧠 What Makes CryptaShare Different?
+
+CryptaShare is not simply:
 
 ```text
+Upload → Encrypt → Download
+```
+
+It implements a complete security workflow:
+
+```text
+          🔐 CONFIDENTIALITY
+                 │
+          AES-256-GCM
+                 │
+                 ▼
+          🔑 KEY SECURITY
+                 │
+            RSA-OAEP
+                 │
+                 ▼
+            INTEGRITY
+                 │
+          SHA-256 + GCM
+                 │
+                 ▼
+           AUTHENTICITY
+                 │
+             RSA-PSS
+                 │
+                 ▼
+         ⚔️ ATTACK DETECTION
+                 │
+                 ▼
+          🚨 SECURITY ALERT
+                 │
+                 ▼
+          🛡️ PROTECTED FILE
+```
+
+---
+
+# 🔬 Possible Research Extensions
+
+Future versions can explore:
+
+* [ ] ECC-based key management
+* [ ] X25519 key exchange
+* [ ] Ed25519 digital signatures
+* [ ] Client-side encryption
+* [ ] End-to-end encrypted file sharing
+* [ ] Key rotation
+* [ ] Key revocation
+* [ ] Hardware-backed key storage
+* [ ] WebAuthn / Passkeys
+* [ ] Cloud object storage
+* [ ] Docker deployment
+* [ ] HTTPS production deployment
+* [ ] Performance benchmarking
+* [ ] Advanced security monitoring
+
+---
+
+# 📈 Future Performance Analysis
+
+Possible experiments include:
+
+### Symmetric Encryption
+
+```text
+AES-128-GCM
+      vs
 AES-256-GCM
-     +
-RSA-OAEP
-     +
-SHA-256
-     +
-RSA-PSS
-     +
-PBKDF2
-     ↓
-Hybrid Secure File Sharing
+      vs
+ChaCha20-Poly1305
+```
+
+Measure:
+
+* Encryption time
+* Decryption time
+* Throughput
+* CPU usage
+* Memory usage
+
+### Asymmetric Cryptography
+
+```text
+RSA-2048
+   vs
+RSA-3072
+   vs
+ECC
+```
+
+Measure:
+
+* Key generation time
+* Encryption / encapsulation time
+* Signature generation
+* Signature verification
+
+---
+
+# 🏆 Project Highlights
+
+```text
+🔐 AES-256-GCM File Encryption
+🔑 RSA-OAEP Hybrid Key Protection
+#️⃣ SHA-256 Integrity Verification
+✍️ RSA-PSS Digital Signatures
+🛡️ PBKDF2 Private-Key Protection
+🔒 bcrypt Password Hashing
+👤 JWT Authentication
+🚦 Role-Based Access Control
+⚔️ Tamper Attack Simulation
+🚨 Automatic Tamper Detection
+📋 Security Audit Logging
+⏳ File Expiration
+💾 Encrypted File Storage
+🧪 Automated Security Testing
+🌐 Full-Stack Web Application
+```
+
+---
+
+# 🔐 Security Principle
+
+> **Never trust encrypted data blindly. Verify it before releasing it.**
+
+```text
+             RECEIVE FILE
+                  │
+                  ▼
+            🔑 Recover Key
+                  │
+                  ▼
+            🔓 Decrypt File
+                  │
+                  ▼
+            🛡️ Verify Integrity
+                  │
+                  ▼
+          ✍️ Verify Authenticity
+                  │
+             ┌────┴────┐
+             ▼         ▼
+           PASS      FAILURE
+             │         │
+             ▼         ▼
+        ✅ DOWNLOAD   🚨 BLOCK
 ```
 
 ---
 
 # 👨‍💻 Author
 
-### Laksh Suthar
+## Laksh Suthar
 
 **Computer Science & Engineering**
 JSS Academy of Technical Education
@@ -988,75 +1043,12 @@ JSS Academy of Technical Education
 
 **Encrypt. Verify. Detect. Protect.**
 
-⭐ If you find this project useful, consider starring the repository.
+</p>
+
+<p align="center">
+
+⭐ Star the repository if you find it useful.
 
 </p>
-```
-
-### One important change I recommend
-
-Your current README starts with:
-
-> `A Complete Production-Grade...`
-
-I would change **only that phrase** to:
-
-> **A full-stack Cryptography & Network Security project**
-
-because "production-grade" is a strong claim for a college project. Everything else can remain.
-
-Also, don't add dozens of animated GIFs. **One good `cryptashare-demo.gif` + 3–4 screenshots** will make the GitHub page look substantially better without making it cluttered. Your current README already has the substantive technical material; the enhancement should make that material **easier to scan**, not bury it in more paragraphs.
-ernal database is configured.
-
-The backend boots at: `http://localhost:5000`
-
-### Step 4: Run Frontend Client
-In a separate terminal:
-```bash
-cd frontend
-npm run dev
-```
-The frontend UI will be accessible at: `http://localhost:5173`
 
 ---
-
-## 8. Default Seed Accounts
-
-When the application boots for the first time, three default accounts are automatically initialized:
-
-| Account Type | Email | Password | Role |
-|---|---|---|---|
-| **Sender** | `alice@cryptashare.io` | `Password123!` | USER |
-| **Receiver** | `bob@cryptashare.io` | `Password123!` | USER |
-| **System Admin** | `admin@cryptashare.io` | `AdminPassword123!` | ADMIN |
-
-*(One-click demo buttons are provided on the login page for convenience during evaluation).*
-
----
-
-## 9. Running Automated Tests
-
-Run the full cryptographic and end-to-end integration test suite:
-```bash
-cd backend
-npm test
-```
-
-Or run individual suites:
-```bash
-# Cryptographic primitives unit tests
-npx jest tests/crypto.test.ts
-
-# End-to-end integration & tampering tests
-npx jest tests/api.test.ts
-```
-
----
-
-## 10. Demonstration Checklist
-
-1. **User Registration:** Register a new user and observe in the console/profile that an RSA-2048 keypair is generated and the private key is encrypted with PBKDF2 + AES-GCM.
-2. **Hybrid Transfer:** Log in as Alice (`alice@cryptashare.io`), navigate to **Send File**, select a document (e.g. PDF/DOCX), select recipient Bob (`bob@cryptashare.io`), and click **Encrypt & Send**.
-3. **Zero Plaintext Inspection:** Inspect the backend `uploads/` folder. The file on disk is an unreadable `.enc` ciphertext blob.
-4. **Verification & Download:** Log in as Bob (`bob@cryptashare.io`), navigate to **Received Files**, click **Verify & Download**, enter Bob's password, and watch all 4 cryptographic checks succeed before the file downloads.
-5. **Tampering Demonstration:** Navigate to the file package details page, click **"Simulate File Tampering"**. Then attempt verification: the system triggers a **SECURITY ALERT**, displays the integrity failure reason, and blocks download.
