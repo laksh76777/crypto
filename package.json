@@ -1,0 +1,11 @@
+{
+  "name": "cryptashare",
+  "version": "1.0.0",
+  "description": "CryptaShare — Secure File Sharing and Integrity Verification Using Hybrid Cryptography",
+  "scripts": {
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "test": "cd backend && npm test",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build"
+  }
+}
