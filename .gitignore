@@ -8,4 +8,6 @@ backend/uploads/*.bak
 .env
 .DS_Store
 *.log
+.agents/
+.gemini/
 
