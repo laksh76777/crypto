@@ -1,7 +1,7 @@
 {
-  "name": "cryptashare",
+  "name": "VeriCrypt",
   "version": "1.0.0",
-  "description": "CryptaShare — Secure File Sharing and Integrity Verification Using Hybrid Cryptography",
+  "description": "VeriCrypt — Secure File Sharing and Integrity Verification Using Hybrid Cryptography",
   "scripts": {
     "start:backend": "cd backend && npm run dev",
     "start:frontend": "cd frontend && npm run dev",

@@ -112,7 +112,7 @@ export const Register: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="alice@cryptashare.io"
+                  placeholder="alice@VeriCrypt.io"
                   className="w-full pl-10 pr-4 py-2.5 neural-input rounded-xl text-sm text-white placeholder-white/30 focus:outline-none"
                   required
                 />

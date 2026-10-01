@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
               </div>
               <div>
                 <span className="text-base sm:text-lg font-bold tracking-[0.16em] uppercase text-white font-['Sora'] drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-                  CRYPTASHARE
+                  VeriCrypt
                 </span>
                 <span className="block text-[9px] font-mono tracking-widest text-[#a2a9b8] uppercase">
                   Zero-Knowledge Security

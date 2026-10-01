@@ -1,5 +1,4 @@
-
-# 🔐 CryptoShare
+# 🔐 VeriCrypt
 
 ## Secure File Sharing & Integrity Verification Using Hybrid Cryptography
 
@@ -20,7 +19,7 @@
 
 ## 📌 Overview
 
-**CryptoShare** is a full-stack secure file-sharing application developed as a **Cryptography and Network Security** project.
+**VeriCrypt** is a full-stack secure file-sharing application developed as a **Cryptography and Network Security** project.
 
 The system demonstrates how multiple cryptographic techniques can be combined to provide:
 
@@ -33,7 +32,7 @@ The system demonstrates how multiple cryptographic techniques can be combined to
 - ⚔️ Tamper detection
 - 📋 Security auditing
 
-Instead of using a single encryption algorithm, CryptaShare implements a **hybrid cryptographic architecture** using symmetric encryption for files and asymmetric cryptography for secure key protection and digital signatures.
+Instead of using a single encryption algorithm, VeriCrypt implements a **hybrid cryptographic architecture** using symmetric encryption for files and asymmetric cryptography for secure key protection and digital signatures.
 
 ---
 
@@ -59,7 +58,7 @@ Instead of using a single encryption algorithm, CryptaShare implements a **hybri
 
 # 🎯 Project Objectives
 
-The main objectives of CryptaShare are:
+The main objectives of VeriCrypt are:
 
 1. Implement practical cryptographic algorithms.
 2. Demonstrate hybrid encryption in a real application.
@@ -114,13 +113,13 @@ flowchart TD
     S -->|YES| T["✅ Secure Download"]
     S -->|NO| U["🚨 Security Alert"]
     U --> V["❌ Download Blocked"]
-````
+```
 
 ---
 
 # 🔐 Hybrid Cryptography
 
-CryptaShare uses a **hybrid cryptographic model**.
+VeriCrypt uses a **hybrid cryptographic model**.
 
 The large file is encrypted using **AES-256-GCM**, while the AES session key is protected using **RSA-OAEP**.
 
@@ -177,7 +176,7 @@ This combines the performance of symmetric encryption with the secure key-distri
 
 # 🔎 Security Verification Pipeline
 
-CryptaShare does not consider a file safe merely because it can be decrypted.
+VeriCrypt does not consider a file safe merely because it can be decrypted.
 
 Multiple checks are performed before allowing download.
 
@@ -220,7 +219,7 @@ Multiple checks are performed before allowing download.
 
 # ⚔️ Tamper Detection
 
-CryptaShare includes a deliberate **tampering simulation** to demonstrate an attack and its corresponding defense.
+VeriCrypt includes a deliberate **tampering simulation** to demonstrate an attack and its corresponding defense.
 
 ## Normal Operation
 
@@ -283,10 +282,10 @@ flowchart LR
 
 # 🛡️ Defense-in-Depth
 
-CryptaShare does not depend on a single security mechanism.
+VeriCrypt does not depend on a single security mechanism.
 
 ```text
-                    🔐 CryptoShare
+                    🔐 VeriCrypt
                          │
         ┌────────────────┼────────────────┐
         │                │                │
@@ -364,7 +363,7 @@ HTTP 410 Gone
 
 # 👤 Authentication & Authorization
 
-CryptaShare uses multiple layers of account security.
+VeriCrypt uses multiple layers of account security.
 
 ```text
 User
@@ -517,7 +516,7 @@ flowchart TB
 # 🧱 Application Modules
 
 ```text
-CryptoShare
+VeriCrypt
 │
 ├── 🔑 Authentication
 │   ├── Registration
@@ -827,7 +826,7 @@ Detailed technical documentation is available in the `docs/` directory.
 
 # 🎓 Cryptography & Network Security Relevance
 
-CryptaShare directly demonstrates practical implementation of:
+VeriCrypt directly demonstrates practical implementation of:
 
 ```text
 🔐 Symmetric Cryptography
@@ -846,7 +845,7 @@ CryptaShare directly demonstrates practical implementation of:
 
 ### Project Mapping
 
-| Academic Requirement     | CryptaShare Implementation             |
+| Academic Requirement     | VeriCrypt Implementation             |
 | ------------------------ | -------------------------------------- |
 | Algorithm Implementation | AES, RSA, SHA-256, PBKDF2              |
 | Secure Application       | Full-stack secure file sharing         |
@@ -873,9 +872,9 @@ CryptaShare directly demonstrates practical implementation of:
 
 ---
 
-# 🧠 What Makes CryptaShare Different?
+# 🧠 What Makes VeriCrypt Different?
 
-CryptaShare is not simply:
+VeriCrypt is not simply:
 
 ```text
 Upload → Encrypt → Download
@@ -1039,7 +1038,7 @@ JSS Academy of Technical Education
 
 <p align="center">
 
-### 🔐 CryptaShare
+### 🔐 VeriCrypt
 
 **Encrypt. Verify. Detect. Protect.**
 

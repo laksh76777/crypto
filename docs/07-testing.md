@@ -1,4 +1,4 @@
-# CryptaShare — Testing Strategy & Verification Report
+# VeriCrypt — Testing Strategy & Verification Report
 
 ## 1. Automated Test Suite Summary
 The automated test suite is developed using **Jest** and **Supertest**, verifying all cryptographic primitives, end-to-end API workflows, authorization guards, and tampering defenses.

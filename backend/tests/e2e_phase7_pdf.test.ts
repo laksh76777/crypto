@@ -21,7 +21,7 @@ describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF
     '1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n' +
     '2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n' +
     '3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R >>\nendobj\n' +
-    '4 0 obj\n<< /Length 55 >>\nstream\nBT /F1 18 Tf 50 700 Td (CryptaShare Confidential Security Report 2026) Tj ET\nendstream\nendobj\n' +
+    '4 0 obj\n<< /Length 55 >>\nstream\nBT /F1 18 Tf 50 700 Td (VeriCrypt Confidential Security Report 2026) Tj ET\nendstream\nendobj\n' +
     'xref\n0 5\n0000000000 65535 f\n0000000009 00000 n\n0000000058 00000 n\n0000000115 00000 n\n0000000206 00000 n\n' +
     'trailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n312\n%%EOF',
     'utf8'
@@ -38,7 +38,7 @@ describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF
       .post('/api/auth/register')
       .send({
         name: 'Alice Sender',
-        email: 'alice.sender@cryptashare.io',
+        email: 'alice.sender@VeriCrypt.io',
         password: 'SenderPassword123!'
       });
     userAToken = resA.body.data.token;
@@ -49,7 +49,7 @@ describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF
       .post('/api/auth/register')
       .send({
         name: 'Bob Receiver',
-        email: 'bob.receiver@cryptashare.io',
+        email: 'bob.receiver@VeriCrypt.io',
         password: 'ReceiverPassword123!'
       });
     userBToken = resB.body.data.token;
@@ -96,7 +96,7 @@ describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF
     const file = res.body.data.find((f: any) => f._id === pdfFileId);
     expect(file).toBeDefined();
     expect(file.originalFileName).toBe('Security-Audit-Report.pdf');
-    expect(file.senderId.email).toBe('alice.sender@cryptashare.io');
+    expect(file.senderId.email).toBe('alice.sender@VeriCrypt.io');
   });
 
   test('Step 4: User B executes verification (RSA-OAEP, AES-GCM, SHA-256, RSA-PSS)', async () => {
@@ -125,7 +125,7 @@ describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF
     // Exact byte equality with the original uploaded PDF buffer
     const downloadedBuffer = Buffer.from(res.body);
     expect(downloadedBuffer.equals(samplePdfBuffer)).toBe(true);
-    expect(downloadedBuffer.toString('utf8')).toContain('CryptaShare Confidential Security Report 2026');
+    expect(downloadedBuffer.toString('utf8')).toContain('VeriCrypt Confidential Security Report 2026');
   });
 
   describe('SECURITY DEMONSTRATION TEST: Unauthorized Tampering Detection', () => {

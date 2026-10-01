@@ -1,8 +1,8 @@
-# CryptaShare — Security Analysis & Threat Modeling
+# VeriCrypt — Security Analysis & Threat Modeling
 
 ## 1. Threat Modeling (STRIDE Evaluation)
 
-| STRIDE Threat Category | Potential Attack Vector | CryptaShare Mitigation Strategy |
+| STRIDE Threat Category | Potential Attack Vector | VeriCrypt Mitigation Strategy |
 |---|---|---|
 | **Spoofing Identity** | Adversary claims to be Alice and sends a malicious file to Bob. | **RSA-PSS Digital Signature:** The file digest is digitally signed with Alice's private key. Bob verifies this using Alice's public certificate. An attacker without Alice's private key cannot forge this signature. |
 | **Tampering with Data** | Attacker intercepts or modifies ciphertext on disk or in transit. | **AES-256-GCM + SHA-256:** AES-GCM includes a 128-bit authentication tag calculated via GHASH. Modifying even 1 bit causes decryption to abort. Furthermore, the pre-encryption SHA-256 digest is compared against the decrypted payload. |
@@ -17,7 +17,7 @@
 
 ### Scenario A: Chosen-Ciphertext Attack (CCA) against RSA
 - **Threat:** If basic RSA PKCS#1 v1.5 padding is used, Bleichenbacher-style padding oracle attacks can decrypt ciphertexts.
-- **CryptaShare Defense:** Employs **RSA-OAEP** with SHA-256. OAEP provides provable indistinguishability under adaptive chosen-ciphertext attacks (IND-CCA2).
+- **VeriCrypt Defense:** Employs **RSA-OAEP** with SHA-256. OAEP provides provable indistinguishability under adaptive chosen-ciphertext attacks (IND-CCA2).
 
 ### Scenario B: Database Breach / Insider Threat
 - **Threat:** Malicious database administrator inspects MongoDB collections.

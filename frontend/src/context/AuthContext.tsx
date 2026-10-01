@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('cryptashare_token'));
+  const [token, setToken] = useState<string | null>(localStorage.getItem('VeriCrypt_token'));
   const [loading, setLoading] = useState<boolean>(true);
 
   const refreshUser = async () => {
@@ -46,7 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (res.data.success && res.data.data) {
       const newToken = res.data.data.token;
       const loggedUser = res.data.data.user;
-      localStorage.setItem('cryptashare_token', newToken);
+      localStorage.setItem('VeriCrypt_token', newToken);
       setToken(newToken);
       setUser(loggedUser);
     }
@@ -57,14 +57,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (res.data.success && res.data.data) {
       const newToken = res.data.data.token;
       const registeredUser = res.data.data.user;
-      localStorage.setItem('cryptashare_token', newToken);
+      localStorage.setItem('VeriCrypt_token', newToken);
       setToken(newToken);
       setUser(registeredUser);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('cryptashare_token');
+    localStorage.removeItem('VeriCrypt_token');
     setToken(null);
     setUser(null);
   };

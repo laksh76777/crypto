@@ -54,7 +54,7 @@ app.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    service: 'CryptaShare Backend',
+    service: 'VeriCrypt Backend',
     version: '1.0.0'
   });
 });

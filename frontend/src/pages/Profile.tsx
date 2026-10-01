@@ -23,7 +23,7 @@ export const Profile: React.FC = () => {
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Your Cryptographic Credentials</h1>
         <p className="text-xs text-[var(--sub)] mt-1">
-          View your public RSA certificate and verify how your private keys are safeguarded in accordance with CryptaShare security standards.
+          View your public RSA certificate and verify how your private keys are safeguarded in accordance with VeriCrypt security standards.
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export const Profile: React.FC = () => {
 
           <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
             <p>
-              Under CryptaShare's zero-plaintext design, your RSA private key is never stored unencrypted. When you registered, your master password was passed through:
+              Under VeriCrypt's zero-plaintext design, your RSA private key is never stored unencrypted. When you registered, your master password was passed through:
             </p>
             <div className="p-3.5 bg-black/40 rounded-xl border border-white/10 font-mono text-[11px] space-y-2 text-slate-300">
               <div className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export const Profile: React.FC = () => {
           {user?.publicKey || 'Public Key not available.'}
         </pre>
         <p className="text-[11px] text-[var(--sub)] font-mono">
-          This public key is distributed across the CryptaShare network. Other users encrypt ephemeral AES session keys with this key when sending files to you.
+          This public key is distributed across the VeriCrypt network. Other users encrypt ephemeral AES session keys with this key when sending files to you.
         </p>
       </div>
     </div>

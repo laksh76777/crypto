@@ -1,7 +1,7 @@
-# CryptaShare — Database Design & Schema Specifications
+# VeriCrypt — Database Design & Schema Specifications
 
 ## 1. Overview
-CryptaShare utilizes **MongoDB** via the Mongoose Object Data Modeling (ODM) library. The database schema strictly adheres to the principle of **Zero-Plaintext Persistence**:
+VeriCrypt utilizes **MongoDB** via the Mongoose Object Data Modeling (ODM) library. The database schema strictly adheres to the principle of **Zero-Plaintext Persistence**:
 - No plaintext passwords (stored only as bcrypt salted hashes).
 - No plaintext private keys (persisted as PBKDF2 + AES-256-GCM cipher bundles).
 - No plaintext file payloads (only encrypted file references, AES-GCM IVs, authTags, RSA-OAEP encapsulated keys, SHA-256 hashes, and RSA-PSS signatures).

@@ -9,7 +9,7 @@ const api = axios.create({
 
 // Request Interceptor: inject Bearer JWT
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('cryptashare_token');
+  const token = localStorage.getItem('VeriCrypt_token');
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }

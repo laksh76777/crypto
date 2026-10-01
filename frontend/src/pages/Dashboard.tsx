@@ -61,7 +61,7 @@ export const Dashboard: React.FC = () => {
               Welcome back, <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-200 to-amber-200">{user?.name}</span>
             </h1>
             <p className="text-xs sm:text-sm text-[#a2a9b8] mt-1.5 max-w-2xl leading-relaxed">
-              CryptaShare protects your documents with multi-layer hybrid cryptography: symmetric AES-256-GCM data encryption, asymmetric RSA-OAEP key encipherment, SHA-256 integrity digests, and RSA-PSS digital signatures.
+              VeriCrypt protects your documents with multi-layer hybrid cryptography: symmetric AES-256-GCM data encryption, asymmetric RSA-OAEP key encipherment, SHA-256 integrity digests, and RSA-PSS digital signatures.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
@@ -167,7 +167,7 @@ export const Dashboard: React.FC = () => {
               <h2 className="text-sm font-bold text-white uppercase tracking-wider font-['Sora']">
                 Hybrid Cryptographic Architecture Pipeline
               </h2>
-              <p className="text-xs text-[#a2a9b8]">How CryptaShare ensures confidentiality, authenticity, and integrity</p>
+              <p className="text-xs text-[#a2a9b8]">How VeriCrypt ensures confidentiality, authenticity, and integrity</p>
             </div>
           </div>
           <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-300">

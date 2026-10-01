@@ -1,7 +1,7 @@
-# CryptaShare — Project Overview
+# VeriCrypt — Project Overview
 
 ## 1. Project Title
-**CryptaShare — Secure File Sharing and Integrity Verification Using Hybrid Cryptography**
+**VeriCrypt — Secure File Sharing and Integrity Verification Using Hybrid Cryptography**
 
 **Domain:** Computer Science & Engineering / Cryptography and Network Security  
 **Academic Level:** College Mini-Project / Final Year Project
@@ -15,7 +15,7 @@ In conventional file transfer mechanisms and cloud storage providers, data secur
 3. **Absence of Sender Authentication & Non-Repudiation:** Symmetric-only ciphers (e.g., standard AES) cannot provide proof of who originated the file without shared secrets.
 4. **Undetected Tampering:** Without cryptographic authentication tags and pre-encryption cryptographic digests, malicious in-flight modification or bit rot goes completely undetected.
 
-**CryptaShare** addresses these challenges by implementing a state-of-the-art **Hybrid Cryptosystem** coupled with digital signatures and strict authorization checks.
+**VeriCrypt** addresses these challenges by implementing a state-of-the-art **Hybrid Cryptosystem** coupled with digital signatures and strict authorization checks.
 
 ---
 

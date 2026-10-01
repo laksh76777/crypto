@@ -8,7 +8,7 @@ import { CryptoService } from '../src/services/crypto/cryptoService';
 
 import { resetAndSeedUsers } from '../src/scripts/seedUsers';
 
-describe('CryptaShare End-to-End API Integration Tests', () => {
+describe('VeriCrypt End-to-End API Integration Tests', () => {
   let userAToken: string;
   let userAId: string;
   let userBToken: string;
@@ -131,7 +131,7 @@ describe('CryptaShare End-to-End API Integration Tests', () => {
   });
 
   test('4. PHASE 4 — Hybrid Encryption File Sharing: Alice -> Bob', async () => {
-    const fileContent = 'CONFIDENTIAL RESEARCH PAPER FOR CRYPTASHARE 2026';
+    const fileContent = 'CONFIDENTIAL RESEARCH PAPER FOR VeriCrypt 2026';
     const originalBuffer = Buffer.from(fileContent, 'utf8');
 
     const res = await request(app)
@@ -211,7 +211,7 @@ describe('CryptaShare End-to-End API Integration Tests', () => {
       .send({ password: 'Password123!' });
 
     expect(res.status).toBe(200);
-    expect(res.text).toBe('CONFIDENTIAL RESEARCH PAPER FOR CRYPTASHARE 2026');
+    expect(res.text).toBe('CONFIDENTIAL RESEARCH PAPER FOR VeriCrypt 2026');
   });
 
   test('8. PHASE 4 Requirement 7: Another user (Charlie) cannot decrypt AES key or access file', async () => {

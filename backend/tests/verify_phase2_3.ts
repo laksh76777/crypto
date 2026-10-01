@@ -8,7 +8,7 @@ async function verifyPhases() {
   console.log('\n--- 1. Testing Registration & RSA Key Generation ---');
   const regResult = await AuthService.register({
     name: 'Inspector Gadget',
-    email: `inspector_${Date.now()}@cryptashare.io`,
+    email: `inspector_${Date.now()}@VeriCrypt.io`,
     password: 'InspectPassword123!',
     role: 'USER'
   });
@@ -42,10 +42,10 @@ async function verifyPhases() {
   console.log('Recovered Private Key starts with:', recoveredPrivKey.substring(0, 27));
 
   // Key Matching Test: Encrypt with Public Key, Decrypt with Recovered Private Key (RSA-OAEP)
-  const testSecret = Buffer.from('CryptaShare-Key-Matching-Passed-2026', 'utf8');
+  const testSecret = Buffer.from('VeriCrypt-Key-Matching-Passed-2026', 'utf8');
   const encSecret = CryptoService.encryptAESKeyWithRSA(testSecret, rawUser.publicKey);
   const decSecret = CryptoService.decryptAESKeyWithRSA(encSecret, recoveredPrivKey);
-  console.log('RSA-OAEP Key Matching Test:', decSecret.toString('utf8') === 'CryptaShare-Key-Matching-Passed-2026' ? 'MATCH CONFIRMED' : 'MISMATCH!');
+  console.log('RSA-OAEP Key Matching Test:', decSecret.toString('utf8') === 'VeriCrypt-Key-Matching-Passed-2026' ? 'MATCH CONFIRMED' : 'MISMATCH!');
 
   // Signature Matching Test: Sign with Recovered Private Key, Verify with Public Key (RSA-PSS)
   const digest = CryptoService.calculateSHA256(testSecret);

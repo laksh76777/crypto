@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { CryptoService } from '../src/services/crypto/cryptoService';
 
 describe('Cryptographic Services Unit Tests', () => {
-  const sampleData = Buffer.from('CryptaShare Top Secret Academic Cryptography Document 2026', 'utf8');
+  const sampleData = Buffer.from('VeriCrypt Top Secret Academic Cryptography Document 2026', 'utf8');
   let senderKeys: { publicKey: string; privateKey: string };
   let recipientKeys: { publicKey: string; privateKey: string };
   let thirdPartyKeys: { publicKey: string; privateKey: string };

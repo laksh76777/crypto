@@ -1,4 +1,4 @@
-# CryptaShare — System Architecture & Workflow
+# VeriCrypt — System Architecture & Workflow
 
 ## 1. High-Level Architectural Diagram
 
@@ -46,8 +46,8 @@ flowchart TD
 sequenceDiagram
     autonumber
     actor Sender as Alice (Sender)
-    participant Client as CryptaShare Client
-    participant Server as CryptaShare Server
+    participant Client as VeriCrypt Client
+    participant Server as VeriCrypt Server
     participant Crypto as CryptoService
     participant Disk as Encrypted Storage
     participant DB as MongoDB

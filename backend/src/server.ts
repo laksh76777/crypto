@@ -30,7 +30,7 @@ const startServer = async () => {
 
     const server = app.listen(config.PORT, () => {
       console.log(`=======================================================`);
-      console.log(`🛡️  CryptaShare Hybrid Cryptographic Backend Running`);
+      console.log(`🛡️  VeriCrypt Hybrid Cryptographic Backend Running`);
       console.log(`📡 URL: http://localhost:${config.PORT}`);
       console.log(`🔒 Encryption: AES-256-GCM + RSA-OAEP (${config.RSA_KEY_SIZE}-bit)`);
       console.log(`✍️  Integrity & Signatures: SHA-256 + RSA-PSS`);

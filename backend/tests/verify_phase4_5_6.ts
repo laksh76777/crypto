@@ -9,7 +9,7 @@ import { connectDatabase, disconnectDatabase } from '../src/config/database';
 
 async function runPhases4to6Verification() {
   console.log('======================================================================');
-  console.log('   CRYPTASHARE — PHASES 4, 5 & 6 LIVE CRYPTOGRAPHIC DEMONSTRATION');
+  console.log('   VeriCrypt — PHASES 4, 5 & 6 LIVE CRYPTOGRAPHIC DEMONSTRATION');
   console.log('======================================================================\n');
 
   await connectDatabase();
@@ -18,19 +18,19 @@ async function runPhases4to6Verification() {
   console.log('>>> [STEP 0] Setting up Cryptographic Identities in Database...');
   const aliceReg = await AuthService.register({
     name: 'Alice (Sender)',
-    email: `alice_${Date.now()}@cryptashare.io`,
+    email: `alice_${Date.now()}@VeriCrypt.io`,
     password: 'AlicePassword123!',
     role: 'USER'
   });
   const bobReg = await AuthService.register({
     name: 'Bob (Recipient)',
-    email: `bob_${Date.now()}@cryptashare.io`,
+    email: `bob_${Date.now()}@VeriCrypt.io`,
     password: 'BobPassword123!',
     role: 'USER'
   });
   const charlieReg = await AuthService.register({
     name: 'Charlie (Adversary)',
-    email: `charlie_${Date.now()}@cryptashare.io`,
+    email: `charlie_${Date.now()}@VeriCrypt.io`,
     password: 'CharliePassword123!',
     role: 'USER'
   });

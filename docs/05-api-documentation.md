@@ -1,4 +1,4 @@
-# CryptaShare — RESTful API Documentation
+# VeriCrypt — RESTful API Documentation
 
 All API endpoints return standard JSON responses:
 
@@ -30,7 +30,7 @@ Creates a new account, generates an RSA-2048 keypair, derives a key with PBKDF2 
   ```json
   {
     "name": "Alice Cooper",
-    "email": "alice@cryptashare.io",
+    "email": "alice@VeriCrypt.io",
     "password": "Password123!",
     "role": "USER"
   }
@@ -46,7 +46,7 @@ Authenticates a user against their bcrypt password hash and issues a JWT token.
 - **Request Body:**
   ```json
   {
-    "email": "alice@cryptashare.io",
+    "email": "alice@VeriCrypt.io",
     "password": "Password123!"
   }
   ```

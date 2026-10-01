@@ -179,7 +179,7 @@ export const AppContent: React.FC = () => {
         <footer className="border-t border-white/10 bg-[#02060f]/60 backdrop-blur-md py-6 text-center text-xs text-slate-400 font-mono">
           <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             <span className="text-slate-300 font-medium">
-              CryptaShare — Secure Hybrid Cryptography
+              VeriCrypt — Secure Hybrid Cryptography
             </span>
             <span className="text-slate-400 text-[11px]">
               AES-256-GCM • RSA-OAEP • SHA-256 • RSA-PSS
