@@ -1,5 +1,5 @@
 
-# 🔐 CryptaShare
+# 🔐 CryptoShare
 
 ## Secure File Sharing & Integrity Verification Using Hybrid Cryptography
 
@@ -20,7 +20,7 @@
 
 ## 📌 Overview
 
-**CryptaShare** is a full-stack secure file-sharing application developed as a **Cryptography and Network Security** project.
+**CryptoShare** is a full-stack secure file-sharing application developed as a **Cryptography and Network Security** project.
 
 The system demonstrates how multiple cryptographic techniques can be combined to provide:
 
@@ -286,7 +286,7 @@ flowchart LR
 CryptaShare does not depend on a single security mechanism.
 
 ```text
-                    🔐 CryptaShare
+                    🔐 CryptoShare
                          │
         ┌────────────────┼────────────────┐
         │                │                │
@@ -517,7 +517,7 @@ flowchart TB
 # 🧱 Application Modules
 
 ```text
-CryptaShare
+CryptoShare
 │
 ├── 🔑 Authentication
 │   ├── Registration
@@ -560,7 +560,7 @@ CryptaShare
 # 📂 Project Structure
 
 ```text
-cryptashare/
+cryptoshare/
 │
 ├── backend/
 │   ├── src/
