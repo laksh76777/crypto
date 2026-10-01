@@ -10,5 +10,3 @@ backend/uploads/*.bak
 *.log
 .agents/
 .gemini/
-test-document.pdf
-
