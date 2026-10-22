@@ -1,6 +1,7 @@
 {
   "name": "VeriCrypt-backend",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "VeriCrypt Backend - Secure File Sharing and Integrity Verification Using Hybrid Cryptography",
   "main": "dist/server.js",
   "scripts": {

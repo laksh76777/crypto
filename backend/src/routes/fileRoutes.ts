@@ -30,8 +30,8 @@ const router = Router();
 router.use(authenticateToken);
 
 // File operations
-router.post('/upload', apiLimiter, upload.single('file'), FileController.share);
-router.post('/share', apiLimiter, upload.single('file'), FileController.share);
+router.post('/upload', apiLimiter, upload.single('file') as any, FileController.share);
+router.post('/share', apiLimiter, upload.single('file') as any, FileController.share);
 router.get('/sent', FileController.getSentFiles);
 router.get('/received', FileController.getReceivedFiles);
 router.get('/:id', FileController.getFileById);
