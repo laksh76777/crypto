@@ -18,20 +18,35 @@ app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or postman)
+      // Allow requests with no origin (like mobile apps, curl, or server-to-server)
       if (!origin) return callback(null, true);
-      // In development or test, allow localhost origins
-      if (config.NODE_ENV !== 'production') {
-        if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
-          return callback(null, true);
-        }
-      }
-      if (origin === config.CLIENT_URL) {
+
+      const normalizedOrigin = origin.replace(/\/$/, '');
+
+      // Localhost origins (dev / testing)
+      if (normalizedOrigin.startsWith('http://localhost:') || normalizedOrigin.startsWith('http://127.0.0.1:')) {
         return callback(null, true);
       }
-      if (config.NODE_ENV === 'production') {
-        return callback(new Error('CORS access denied for this origin'));
+
+      // Check configured CLIENT_URL list (supports comma-separated origins)
+      const allowedUrls = (config.CLIENT_URL || '')
+        .split(',')
+        .map((u) => u.trim().replace(/\/$/, ''))
+        .filter(Boolean);
+
+      if (allowedUrls.includes('*') || allowedUrls.includes(normalizedOrigin)) {
+        return callback(null, true);
       }
+
+      // Allow any Vercel production or preview deployment (*.vercel.app)
+      if (normalizedOrigin.endsWith('.vercel.app')) {
+        return callback(null, true);
+      }
+
+      if (config.NODE_ENV === 'production') {
+        return callback(new Error(`CORS access denied for origin: ${origin}`));
+      }
+
       return callback(null, true);
     },
     credentials: true,

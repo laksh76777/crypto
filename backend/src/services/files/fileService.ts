@@ -66,12 +66,14 @@ export class FileService {
 
     this.ensureUploadDir();
 
-    // 1. Fetch sender and receiver
-    const sender = await User.findById(senderId);
+    // 1. Fetch sender and receiver concurrently
+    const [sender, receiver] = await Promise.all([
+      User.findById(senderId),
+      User.findById(receiverId)
+    ]);
     if (!sender) {
       throw new Error('Sender user not found');
     }
-    const receiver = await User.findById(receiverId);
     if (!receiver) {
       throw new Error('Recipient user not found');
     }

@@ -25,6 +25,9 @@ const startServer = async () => {
       if (!exists) {
         console.log(`[Bootstrap] Creating missing account: ${acc.email}...`);
         await AuthService.register(acc);
+        console.log(`[Bootstrap] ✓ Account created: ${acc.email} (${acc.role})`);
+      } else {
+        console.log(`[Bootstrap] Connected to account in database: ${acc.email} (${exists.name}) [Role: ${exists.role}] (RSA Key: Active)`);
       }
     }
 

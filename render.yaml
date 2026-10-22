@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: vericrypt-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: CLIENT_URL
+        sync: false
+      - key: RSA_KEY_SIZE
+        value: 2048
+      - key: FILE_STORAGE_PATH
+        value: ./uploads

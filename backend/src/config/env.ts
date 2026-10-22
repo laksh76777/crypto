@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
+// Load environment variables from process.env, cwd .env, or root .env
+dotenv.config();
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 export const config = {

@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { User, FileRecord, VerificationResult, AuditLog, SystemStats } from '../types';
 
-const API_BASE = '/api';
+// In production on Vercel, requests point to Render backend (via VITE_API_BASE_URL).
+// In local dev, defaults to '/api' which Vite proxies to localhost:5000.
+const rawBase = import.meta.env.VITE_API_BASE_URL as string | undefined;
+const API_BASE = rawBase
+  ? (rawBase.endsWith('/api') ? rawBase : `${rawBase.replace(/\/$/, '')}/api`)
+  : '/api';
 
 const api = axios.create({
   baseURL: API_BASE

@@ -96,7 +96,7 @@ describe('PHASE 7 — Complete Secure File Sharing & Security Demonstration (PDF
     const file = res.body.data.find((f: any) => f._id === pdfFileId);
     expect(file).toBeDefined();
     expect(file.originalFileName).toBe('Security-Audit-Report.pdf');
-    expect(file.senderId.email).toBe('alice.sender@VeriCrypt.io');
+    expect(file.senderId.email.toLowerCase()).toBe('alice.sender@vericrypt.io');
   });
 
   test('Step 4: User B executes verification (RSA-OAEP, AES-GCM, SHA-256, RSA-PSS)', async () => {

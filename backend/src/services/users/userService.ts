@@ -49,30 +49,38 @@ export class UserService {
       fileQuery.$or = [{ senderId: userId }, { receiverId: userId }];
     }
 
-    const totalFiles = await FileRecord.countDocuments(fileQuery);
-    const sentCount = userId ? await FileRecord.countDocuments({ senderId: userId }) : await FileRecord.countDocuments();
-    const receivedCount = userId ? await FileRecord.countDocuments({ receiverId: userId }) : totalFiles;
-    
-    const verifiedLogs = await AuditLog.countDocuments({
-      action: 'INTEGRITY_VERIFIED',
-      result: 'SUCCESS',
-      ...(userId ? { userId } : {})
-    });
-
-    const failedLogs = await AuditLog.countDocuments({
-      action: 'INTEGRITY_FAILED',
-      result: 'FAILURE',
-      ...(userId ? { userId } : {})
-    });
-
     const now = new Date();
-    const expiredCount = await FileRecord.countDocuments({
-      ...fileQuery,
-      expiresAt: { $ne: null, $lt: now }
-    });
 
-    const totalUsers = await User.countDocuments();
-    const activeUsers = await User.countDocuments({ status: 'ACTIVE' });
+    const [
+      totalFiles,
+      sentCount,
+      receivedCount,
+      verifiedLogs,
+      failedLogs,
+      expiredCount,
+      totalUsers,
+      activeUsers
+    ] = await Promise.all([
+      FileRecord.countDocuments(fileQuery),
+      userId ? FileRecord.countDocuments({ senderId: userId }) : FileRecord.countDocuments(),
+      userId ? FileRecord.countDocuments({ receiverId: userId }) : FileRecord.countDocuments(fileQuery),
+      AuditLog.countDocuments({
+        action: 'INTEGRITY_VERIFIED',
+        result: 'SUCCESS',
+        ...(userId ? { userId } : {})
+      }),
+      AuditLog.countDocuments({
+        action: 'INTEGRITY_FAILED',
+        result: 'FAILURE',
+        ...(userId ? { userId } : {})
+      }),
+      FileRecord.countDocuments({
+        ...fileQuery,
+        expiresAt: { $ne: null, $lt: now }
+      }),
+      User.countDocuments(),
+      User.countDocuments({ status: 'ACTIVE' })
+    ]);
 
     return {
       totalFiles,
